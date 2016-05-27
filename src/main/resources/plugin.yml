@@ -1,0 +1,5 @@
+name: Core
+version: 1.0
+main: me.gamerzking.core.Core
+load: STARTUP
+authors: [GamerzKing]
