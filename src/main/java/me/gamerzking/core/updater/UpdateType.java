@@ -9,6 +9,7 @@ public enum UpdateType {
 
     MINUTE(60000),
     HALF_MINUTE(30000),
+    FIVE_SECOND(5000),
     THREE_SECOND(3000),
     SECOND(1000),
     HALF_SECOND(500),

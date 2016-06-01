@@ -1,7 +1,11 @@
 package me.gamerzking.core.npc;
 
+import org.bukkit.entity.Player;
+
 /**
- * Created by GamerzKing on 5/19/2016.
+ * Created by GamerzKing on 5/31/2016.
  */
-public class Npc {
+public interface Npc {
+
+    void onInteract(Player player);
 }

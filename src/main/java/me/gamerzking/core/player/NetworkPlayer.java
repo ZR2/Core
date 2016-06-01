@@ -2,10 +2,10 @@ package me.gamerzking.core.player;
 
 import me.gamerzking.core.Core;
 import me.gamerzking.core.rank.Rank;
-import net.minecraft.server.v1_9_R1.IChatBaseComponent;
-import net.minecraft.server.v1_9_R1.PacketPlayOutChat;
+import net.minecraft.server.v1_9_R2.IChatBaseComponent;
+import net.minecraft.server.v1_9_R2.PacketPlayOutChat;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_9_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_9_R2.entity.CraftPlayer;
 import org.bukkit.entity.Player;
 
 import java.io.ByteArrayOutputStream;
