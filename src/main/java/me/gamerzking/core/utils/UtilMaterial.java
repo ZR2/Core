@@ -19,7 +19,7 @@ public class UtilMaterial {
     private UtilMaterial() {}
 
     /**
-     * Checks if the ItemStack provided is equal to the Material provided.
+     * Checks if the {@link org.bukkit.inventory.ItemStack} provided is equal to the Material provided.
      *
      * @param itemStack The item determining the relationship.
      * @param material The material.
@@ -35,7 +35,7 @@ public class UtilMaterial {
     }
 
     /**
-     * Checks if the ItemStack provided is a sword.
+     * Checks if the {@link org.bukkit.inventory.ItemStack} provided is a sword.
      *
      * @param itemStack The item determining the relationship.
      * @return True if the items type is equal to a sword. Otherwise, false.

@@ -14,21 +14,20 @@ import java.util.Map;
  */
 public class Guild {
 
-    private int id = -1;
-    private String name, description = "";
-    private int coins = 1000;
+    private String name;
+    private String[] description;
+
+    private int id;
+    private int coins;
 
     private Timestamp dateCreated;
 
     private Map<String, GuildRank> members = new HashMap<>();
-    private List<String> onlineMembers = new ArrayList<>();
-
-    private long inviteExpire = 5;
     private Map<String, Long> invited = new HashMap<>();
 
     public Guild() {}
 
-    public void broadcast(String message) {
+    public void broadcastMessage(String... message) {
 
         for(String name : getMembers().keySet()) {
 
@@ -46,7 +45,7 @@ public class Guild {
         if(!getInvited().containsKey(player.getName()))
             return false;
 
-        if(System.currentTimeMillis() > getInvited().get(player.getName()) + (getInviteExpire() * 60000))
+        if(System.currentTimeMillis() > getInvited().get(player.getName()) + 60000)
             return false;
 
         return true;
@@ -60,7 +59,7 @@ public class Guild {
         return name;
     }
 
-    public String getDescription() {
+    public String[] getDescription() {
         return description;
     }
 
@@ -70,10 +69,6 @@ public class Guild {
 
     public Map<String, GuildRank> getMembers() {
         return members;
-    }
-
-    public long getInviteExpire() {
-        return inviteExpire;
     }
 
     public Map<String, Long> getInvited() {

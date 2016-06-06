@@ -10,7 +10,7 @@ import java.util.Collection;
  */
 public interface ICommand {
 
-    void execute(Player player, String[] args);
+    void execute(Player sender, String[] args);
 
     Collection<String> getAliases();
 

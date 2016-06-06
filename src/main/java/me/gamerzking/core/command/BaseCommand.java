@@ -1,8 +1,6 @@
 package me.gamerzking.core.command;
 
-import me.gamerzking.core.Core;
 import me.gamerzking.core.rank.Rank;
-import org.bukkit.entity.Player;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -11,7 +9,7 @@ import java.util.List;
 /**
  * Created by GamerzKing on 5/31/2016.
  */
-public abstract class CommandBase implements ICommand {
+public abstract class BaseCommand implements ICommand {
 
     private Rank requiredRank;
     private Rank[] specificRanks;
@@ -23,7 +21,7 @@ public abstract class CommandBase implements ICommand {
      * @param aliases The aliases associated with the command.
      */
 
-    public CommandBase(Rank requiredRank, String... aliases) {
+    public BaseCommand(Rank requiredRank, String... aliases) {
 
         this(requiredRank, null, aliases);
     }
@@ -34,7 +32,7 @@ public abstract class CommandBase implements ICommand {
      * @param aliases The aliases associated with the command.
      */
 
-    public CommandBase(Rank requiredRank, Rank[] specificRanks, String... aliases) {
+    public BaseCommand(Rank requiredRank, Rank[] specificRanks, String... aliases) {
 
         this.requiredRank = requiredRank;
         this.specificRanks = specificRanks;

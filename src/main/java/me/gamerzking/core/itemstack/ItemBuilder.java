@@ -1,37 +1,19 @@
 package me.gamerzking.core.itemstack;
 
+import net.minecraft.server.v1_9_R2.NBTTagCompound;
+import net.minecraft.server.v1_9_R2.NBTTagList;
 import org.bukkit.*;
+import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
-import org.bukkit.enchantments.EnchantmentWrapper;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.*;
 
-import java.lang.reflect.Field;
 import java.util.*;
 
 /**
  * Created by GamerzKing on 5/10/2016.
  */
 public class ItemBuilder {
-
-    private static Field enchantmentNew;
-    private static GlowEnchantment enchantment;
-
-    static {
-        try {
-
-            enchantmentNew = Enchantment.class.getDeclaredField("acceptingNew");
-            enchantmentNew.setAccessible(true);
-            enchantmentNew.set(null, true);
-
-            enchantment = new GlowEnchantment();
-            EnchantmentWrapper.registerEnchantment(enchantment);
-
-        } catch(Exception e) {
-            e.printStackTrace();
-        }
-    }
 
     private ItemStack itemStack;
 
@@ -144,19 +126,22 @@ public class ItemBuilder {
 
     public ItemBuilder addGlow() {
 
-        addEnchant(enchantment, enchantment.getStartLevel());
-        return this;
-    }
+        net.minecraft.server.v1_9_R2.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
+        NBTTagCompound tag = null;
 
-    /**
-     * Removes the enchantment glow affect associated with the ItemStack.
-     *
-     * @return The item with the enchantment glow effect removed.
-     */
+        if (!nmsStack.hasTag()) {
+            tag = new NBTTagCompound();
+            nmsStack.setTag(tag);
+        }
 
-    public ItemBuilder removeGlow() {
+        if (tag == null) tag = nmsStack.getTag();
 
-        removeEnchantment(enchantment);
+        NBTTagList ench = new NBTTagList();
+
+        tag.set("ench", ench);
+        nmsStack.setTag(tag);
+
+        itemStack = CraftItemStack.asCraftMirror(nmsStack);
         return this;
     }
 

@@ -25,8 +25,8 @@ public class UtilText {
 
         String out = "";
 
-        for (T cur : inputList) {
-            out += cur.toString() + (comma ? ", " : " ");
+        for (T array : inputList) {
+            out += array.toString() + (comma ? ", " : " ");
         }
 
         if (out.length() > 0) {

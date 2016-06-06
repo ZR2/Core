@@ -29,7 +29,13 @@ public class CommandManager implements Listener {
     public void onCommand(PlayerCommandPreprocessEvent event) {
 
         String commandName = event.getMessage().substring(1);
-        String[] args = event.getMessage().split(" ");
+        String[] args = null;
+
+        if (commandName.contains(" ")) {
+
+            commandName = commandName.split(" ")[0];
+            args = event.getMessage().substring(event.getMessage().indexOf(' ') + 1).split(" ");
+        }
 
         ICommand command = commands.get(commandName.toLowerCase());
 
@@ -38,7 +44,6 @@ public class CommandManager implements Listener {
         if(command != null) {
 
             event.setCancelled(true);
-
             command.execute(event.getPlayer(), args);
         }
     }

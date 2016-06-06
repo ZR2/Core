@@ -12,7 +12,7 @@ public class UserPreferences {
     private boolean partyRequests = true;
     private boolean guildRequests = true;
 
-    public boolean isPlayerVisibility() {
+    public boolean canSeePlayers() {
         return playerVisibility;
     }
 
@@ -20,7 +20,7 @@ public class UserPreferences {
         this.playerVisibility = playerVisibility;
     }
 
-    public boolean isBlood() {
+    public boolean canSeeBlood() {
         return blood;
     }
 
@@ -28,7 +28,7 @@ public class UserPreferences {
         this.blood = blood;
     }
 
-    public boolean isChatVisibility() {
+    public boolean canSeeChat() {
         return chatVisibility;
     }
 
@@ -36,7 +36,7 @@ public class UserPreferences {
         this.chatVisibility = chatVisibility;
     }
 
-    public boolean isFriendRequests() {
+    public boolean canReceiveFriendRequests() {
         return friendRequests;
     }
 
@@ -44,7 +44,7 @@ public class UserPreferences {
         this.friendRequests = friendRequests;
     }
 
-    public boolean isPartyRequests() {
+    public boolean canReceivePartyRequests() {
         return partyRequests;
     }
 
@@ -52,7 +52,7 @@ public class UserPreferences {
         this.partyRequests = partyRequests;
     }
 
-    public boolean isGuildRequests() {
+    public boolean canReceiveGuildRequests() {
         return guildRequests;
     }
 

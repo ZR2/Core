@@ -45,10 +45,10 @@ public class UtilColor {
     }
 
     /**
-     * Gets the color base from the ChatColor provided.
+     * Gets the color base from the {@link org.bukkit.ChatColor} provided.
      *
-     * @param color The ChatColor you are getting the color from.
-     * @return The {@link Color} closest to the specified color.
+     * @param color The {@link org.bukkit.ChatColor} you are getting the color from.
+     * @return The {@link org.bukkit.Color} closest to the specified color.
      */
 
     public static Color getColorBase(ChatColor color) {

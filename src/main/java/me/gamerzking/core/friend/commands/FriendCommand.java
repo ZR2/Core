@@ -1,24 +1,23 @@
-package me.gamerzking.core.guild.commands;
+package me.gamerzking.core.friend.commands;
 
 import me.gamerzking.core.command.BaseCommand;
 import me.gamerzking.core.rank.Rank;
 import org.bukkit.entity.Player;
 
 /**
- * Created by GamerzKing on 5/31/2016.
+ * Created by GamerzKing on 6/1/2016.
  */
-public class GuildCommand extends BaseCommand {
+public class FriendCommand extends BaseCommand {
 
-    public GuildCommand() {
+    public FriendCommand() {
 
         super(
                 Rank.PLAYER,
-                "g", "guild");
+                "f", "friend", "friends");
     }
 
     @Override
     public void execute(Player sender, String[] args) {
 
-        sender.sendMessage("Aye!");
     }
 }
