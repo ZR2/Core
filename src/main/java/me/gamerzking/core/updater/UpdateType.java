@@ -17,28 +17,22 @@ public enum UpdateType {
     TICK(50);
 
     private long milliseconds;
-    private long currentTime;
+
+    /**
+     * @param milliseconds How many milliseconds the time sequence is updated.
+     */
 
     UpdateType(long milliseconds) {
 
         this.milliseconds = milliseconds;
-        this.currentTime = System.currentTimeMillis();
     }
+
+    /**
+     * @return Whether time has elapsed between the current time, and the milliseconds provided in the constructor.
+     */
 
     public boolean elapsed() {
 
-        if (UtilTime.elapsed(currentTime, milliseconds)) {
-            return true;
-        }
-
-        return false;
-    }
-
-    public long getMilliseconds() {
-        return milliseconds;
-    }
-
-    public long getCurrentTime() {
-        return currentTime;
+        return UtilTime.elapsed(System.currentTimeMillis(), milliseconds);
     }
 }

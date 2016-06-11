@@ -1,33 +1,26 @@
 package me.gamerzking.core.menu;
 
+import me.gamerzking.core.Core;
 import org.bukkit.Bukkit;
-import org.bukkit.ChatColor;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.event.inventory.InventoryCloseEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
+import java.util.Map;
 
 /**
  * Created by GamerzKing on 6/3/2016.
  */
-public abstract class MenuPage {
+public abstract class MenuPage implements Listener {
 
+    private ItemStack placeholder;
     private Inventory inventory;
-    private static HashMap<String, MenuPage> inventories = new HashMap<>();
 
-    private HashMap<Integer, MenuItem> runs = new HashMap<>();
-    private int currentOpen = 0;
-    private boolean registered = false;
+    private Map<Integer, MenuItem> items = new HashMap<>();
 
     public MenuPage(String name, int rows) {
         this(name, rows, null);
@@ -35,137 +28,77 @@ public abstract class MenuPage {
 
     public MenuPage(String name, int rows, ItemStack placeholder) {
 
-        int size = rows * 9;
+        this.placeholder = placeholder;
+
+        // If the size of the inventory is greater than 54, or isn't divisible by 9, set the size to 54
+        int size = (rows * 9 > 54 || rows % 9 == 0) ? 54 : rows * 9;
+
+        // Creating the inventory
         inventory = Bukkit.createInventory(null, size, name);
 
         if (placeholder != null) {
             for (int i = 0; i < size; i++) {
 
-                inventory.setItem(i, placeholder);
+                // Adds the placeholder to the items (so it can't be clicked)
+                addItem(i + 1, placeholder, null);
             }
         }
-        register();
+
+        Core.getInstance().registerEvents(this);
     }
 
-    public Inventory getSourceInventory() {
-        return inventory;
+    /**
+     * Builds the completed menu page.
+     */
+
+    public abstract void buildPage();
+
+    /**
+     * Adds the specified item to the menu page.
+     *
+     * @param slot      The slot the item will be added to.
+     * @param itemStack The ItemStack you're applying to the slot.
+     * @param item      The item that you're adding (handles interaction).
+     */
+
+    public void addItem(int slot, ItemStack itemStack, MenuItem item) {
+
+        items.put(slot, item);
+        inventory.setItem(slot - 1, itemStack);
     }
 
-    public int getSize() {
-        return inventory.getSize();
-    }
-
-    public void setItem(ItemStack itemstack, Integer slot, MenuItem executeOnClick) {
-        setItem(itemstack, null, slot, executeOnClick);
-    }
-
-    public void setItem(ItemStack item, String displayName, int slot, MenuItem executeOnClick, String... description) {
-
-        ItemMeta meta = item.getItemMeta();
-
-        if (displayName != null) {
-            meta.setDisplayName(displayName);
-        }
-
-        if (description != null) {
-
-            List<String> lore = new ArrayList<String>();
-
-            for (String s : description) {
-                lore.add(ChatColor.GRAY + s);
-            }
-            meta.setLore(lore);
-        }
-
-        item.setItemMeta(meta);
-        inventory.setItem(slot, item);
-
-        runs.put(slot, executeOnClick);
-    }
-
-    public void removeItem(int slot) {
-        inventory.setItem(slot, new ItemStack(Material.AIR));
-    }
-
-    public void setItem(ItemStack itemstack, Integer slot) {
-        inventory.setItem(slot, itemstack);
-    }
-
-    public static Listener getListener() {
-
-        return new Listener() {
-
-            @EventHandler
-            public void onClick(InventoryClickEvent event) {
-
-                if (event.getWhoClicked() instanceof Player) {
-
-                    if (event.getCurrentItem() == null)
-                        return;
-
-                    if (inventories.containsKey(event.getClickedInventory().getName())) {
-
-                        MenuPage current = inventories.get(event.getClickedInventory().getName());
-                        event.setCancelled(true);
-
-                        Player p = (Player) event.getWhoClicked();
-
-                        if (current.runs.get(event.getSlot()) == null)
-                            return;
-
-                        current.runs.get(event.getSlot()).onClick(p, event.getClick());
-                    }
-                }
-            }
-        };
-    }
-
-    @EventHandler
-    public void onClose(InventoryCloseEvent e) {
-
-        if (e.getPlayer() instanceof Player) {
-
-            Inventory inventory;
-
-            if ((inventory = e.getInventory()) == null) {
-                return;
-            }
-
-            if (inventories.containsKey(inventory.getName())) {
-
-                MenuPage current = inventories.get(inventory.getName());
-                current.currentOpen--;
-
-                if (current.currentOpen != 0)
-                    return;
-
-                current.unregister();
-            }
-        }
-    }
+    /**
+     * Opens the completed menu page to the specified player.
+     *
+     * @param player The player that will see the menu.
+     */
 
     public void openInventory(Player player) {
 
-        currentOpen++;
-        register();
-        player.openInventory(getSourceInventory());
+        // Build Page
+        buildPage();
+
+        // Open Inventory
+        player.openInventory(inventory);
     }
 
-    private void register() {
+    @EventHandler
+    public void onClick(InventoryClickEvent event) {
 
-        if (!registered) {
+        int slot = event.getSlot() + 1;
 
-            inventories.put(inventory.getName(), this);
-            registered = true;
-        }
-    }
+        if (!items.containsKey(slot))
+            return;
 
-    private void unregister() {
+        if(!event.getClickedInventory().equals(inventory))
+            return;
 
-        if (registered) {
+        event.setCancelled(true);
 
-            inventories.remove(inventory.getName());
-            registered = false;
-        }
+        Player player = (Player) event.getWhoClicked();
+        MenuItem item = items.get(slot);
+
+        if (event.getCurrentItem().equals(placeholder) || item != null)
+            item.onClick(player, event);
     }
 }

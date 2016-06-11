@@ -120,7 +120,7 @@ public class PartyCommand extends BaseCommand {
         party.invitePlayer(target);
 
         target.sendMessage(player.getName() + " invited you to their party!");
-        //new FancyMessage("Click here ").color(ChatColor.GREEN).command("party accept " + player.getName()).then("to join the party!").color(ChatColor.GRAY).send(target);
+        new FancyMessage("Click here ").color(ChatColor.GREEN).command("party accept " + player.getName()).then("to join the party!").color(ChatColor.GRAY).send(target);
     }
 
     /**

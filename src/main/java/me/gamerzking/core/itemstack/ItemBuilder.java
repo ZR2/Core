@@ -210,7 +210,6 @@ public class ItemBuilder {
 
     public ItemStack build() {
 
-        itemStack.setItemMeta(itemStack.getItemMeta());
         return itemStack;
     }
 }

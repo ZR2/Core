@@ -16,7 +16,7 @@ public class CommandManager implements Listener {
     private Map<String, ICommand> commands;
 
     /**
-     * Instantiates the commands and registers the events.
+     * Instantiates the Map of commands and registers the events.
      */
 
     public CommandManager() {
@@ -56,11 +56,10 @@ public class CommandManager implements Listener {
 
     public void addCommand(ICommand command) {
 
-        for(String alias : command.getAliases()) {
-
+        for (String alias : command.getAliases())
             commands.put(alias, command);
-            System.out.println("Command registered: " + command.getAliases());
-        }
+
+        System.out.println("Registered commands: " + command.getAliases() + " from " + command.getClass().getSimpleName());
     }
 
     /**

@@ -9,8 +9,8 @@ import org.bukkit.event.HandlerList;
  */
 public class UpdateEvent extends Event {
 
-    private static final HandlerList handlers = new HandlerList();
     private UpdateType type;
+    private static final HandlerList handlers = new HandlerList();
 
     public UpdateEvent(UpdateType type) {
         this.type = type;

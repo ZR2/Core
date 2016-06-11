@@ -10,6 +10,10 @@ public class Updater implements Runnable {
 
     private JavaPlugin plugin;
 
+    /**
+     * @param plugin The plugin instance that handles the repeating task and calls the event.
+     */
+
     public Updater(JavaPlugin plugin) {
 
         this.plugin = plugin;
@@ -20,15 +24,10 @@ public class Updater implements Runnable {
     public void run() {
 
         for (UpdateType updateType : UpdateType.values()) {
-
             if (updateType.elapsed()) {
 
                 plugin.getServer().getPluginManager().callEvent(new UpdateEvent(updateType));
             }
         }
-    }
-
-    public JavaPlugin getPlugin() {
-        return plugin;
     }
 }

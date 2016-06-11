@@ -1,16 +1,13 @@
 package me.gamerzking.core;
 
 import me.gamerzking.core.command.CommandManager;
-import me.gamerzking.core.database.Database;
 import me.gamerzking.core.database.DatabaseManager;
 import me.gamerzking.core.friend.commands.FriendCommand;
 import me.gamerzking.core.guild.commands.GuildCommand;
-import me.gamerzking.core.menu.MenuPage;
 import me.gamerzking.core.party.PartyManager;
 import me.gamerzking.core.party.commands.PartyCommand;
 import me.gamerzking.core.portal.Portal;
 import me.gamerzking.core.punishment.commands.PunishCommand;
-import me.gamerzking.core.punishment.repository.PunishmentRepository;
 import me.gamerzking.core.rank.commands.RankCommand;
 import me.gamerzking.core.updater.Updater;
 import org.bukkit.ChatColor;
@@ -18,7 +15,6 @@ import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.sql.SQLException;
 import java.util.Arrays;
 
 /**
@@ -52,8 +48,6 @@ public class Core extends JavaPlugin {
         getCommandManager().addCommand(new PartyCommand(getPartyManager()));
         getCommandManager().addCommand(new PunishCommand());
         getCommandManager().addCommand(new RankCommand());
-
-        registerEvents(MenuPage.getListener());
 
         getServer().getMessenger().registerOutgoingPluginChannel(this, "BungeeCord");
         getServer().getMessenger().registerIncomingPluginChannel(this, "BungeeCord", getPortal());
