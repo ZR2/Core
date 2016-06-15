@@ -16,6 +16,7 @@ public enum UpdateType {
     QUARTER_SECOND(250),
     TICK(50);
 
+    private long currentTime;
     private long milliseconds;
 
     /**
@@ -33,6 +34,12 @@ public enum UpdateType {
 
     public boolean elapsed() {
 
-        return UtilTime.elapsed(System.currentTimeMillis(), milliseconds);
+        if (UtilTime.elapsed(currentTime, milliseconds)) {
+
+            currentTime = System.currentTimeMillis();
+            return true;
+        }
+
+        return false;
     }
 }
