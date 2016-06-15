@@ -1,10 +1,8 @@
 package me.gamerzking.core.utils;
 
 import org.bukkit.Location;
-import org.bukkit.Material;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Created by GamerzKing on 5/2/2016.
