@@ -180,7 +180,6 @@ public class ItemBuilder {
 	 * @return The item with the specified color applied to it.
 	 */
 
-	@SuppressWarnings("deprecation")
 	public ItemBuilder setWoolColor(DyeColor color) {
 
 		if(itemStack.getType() != Material.WOOL)
@@ -237,20 +236,19 @@ public class ItemBuilder {
 
 	/**
 	 * 
-	 * Hides or shows a certain itemflag.
+	 * Hides or shows a specific item flag.
 	 * 
-	 * @param flags The flags that will be shown/hidden.
-	 * @param hide If the flag should be hidden or shown.
+	 * @param flag The flag that will be shown/hidden.
+	 * @param hide If the flag should be hidden or not.
 	 * @return The item with the modified ItemFlag.
 	 */
-	public ItemBuilder setFlag(ItemFlag flag, boolean hide)
-	{
-		if (hide) itemStack.getItemMeta().addItemFlags(flag);
+	public ItemBuilder setFlag(ItemFlag flag, boolean hide) {
 
-		else
-		{
-			if (itemStack.getItemMeta().hasItemFlag(flag)) itemStack.getItemMeta().removeItemFlags(flag);
-		}
+        if (hide && itemStack.hasItemMeta())
+            itemStack.getItemMeta().addItemFlags(flag);
+
+        else
+            itemStack.getItemMeta().removeItemFlags(flag);
 		
 		return this;
 	}
