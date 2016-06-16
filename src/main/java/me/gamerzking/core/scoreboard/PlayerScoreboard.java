@@ -1,146 +1,159 @@
 package me.gamerzking.core.scoreboard;
 
-import me.gamerzking.core.scoreboard.presets.ScoreboardPreset;
+import me.gamerzking.core.utils.UtilRandom;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by GamerzKing on 5/31/2016.
  */
-public class PlayerScoreboard {
+public abstract class PlayerScoreboard {
 
-    private Player player;
+    private Scoreboard scoreboard;
+    private Objective objective;
 
-    private ScoreboardPreset preset;
-    private boolean presetChanged = false;
-
-    private List<String> previousScores;
+    private List<String> lines = new ArrayList<>();
+    private Map<UUID, Scoreboard> scoreboards = new HashMap<>();
 
     /**
      * @param player The owner of the scoreboard. Mainly used for per player statistics and other data.
      */
 
-    public PlayerScoreboard(Player player, ScoreboardPreset preset) {
+    public PlayerScoreboard(String title, Player player) {
 
-        this.player = player;
+        scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        scoreboards.put(player.getUniqueId(), scoreboard);
 
-        // Create a new scoreboard
-        Scoreboard scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-
-        // Register objectives
-        scoreboard.registerNewObjective("suffix", "dummy").setDisplaySlot(DisplaySlot.PLAYER_LIST);
-        scoreboard.registerNewObjective("sidebar", "dummy").setDisplaySlot(DisplaySlot.SIDEBAR);
-
-        this.preset = preset;
-        updateScoreboard();
+        objective = scoreboard.registerNewObjective("Board" + UtilRandom.getRandomInt(9999999), "dummy");
+        objective.setDisplaySlot(DisplaySlot.SIDEBAR);
+        objective.setDisplayName(ChatColor.BOLD + title);
     }
 
     /**
-     * Removes the current scoreboard from the player by un-registering all of the display slots from their scoreboard.
+     * Adds the specified text to the scoreboard.
      *
-     * @param player The owner of the scoreboard.
+     * @param text The text being added to the board.
      */
 
-    public void removeScorebord(Player player) {
+    public void addLine(String text) {
 
-        for (DisplaySlot slot : DisplaySlot.values()) {
+        text = abbreviate(text); /* Make sure it can't be more than 16 characters */
 
-            if (slot == null) /* If any of the display slots are null, do nothing with them */
-                return;
+        lines.add(text);
+    }
 
-            // Unregister the slot.
-            player.getScoreboard().getObjective(slot).unregister();
+    public void addBlankLine() {
+
+        addLine(" ");
+    }
+
+    /**
+     * Abbreviates the string specified.
+     *
+     * @param line The line you're abbreviating.
+     * @return The string with a maximum length of 16 characters.
+     */
+
+    private String abbreviate(String line) {
+
+        if (line.length() > 16)
+            line = line.substring(0, 16);
+
+        return line;
+    }
+
+    /**
+     * Builds the current scoreboard.
+     */
+
+    public void build() {
+
+        List<String> currentLines = new ArrayList<>();
+
+        for(String line : lines) {
+
+            while(true) {
+
+                boolean duplicate = false;
+
+                for(String text : currentLines) {
+
+                    if(line.equals(text) /* There is a duplicate. */) {
+
+                        line += ChatColor.RESET;
+                        duplicate = true;
+                    }
+                }
+
+                if(!duplicate)
+                    break;
+            }
+
+            currentLines.add(line);
         }
 
-        player.getScoreboard().getEntryTeam(player.getName()).removeEntry(player.getName());
-    }
+        for(int i = 0; i < 15; i++) {
 
-    /**
-     * Updates the current scoreboard.
-     */
+            if(i >= currentLines.size() /* There are more than 15 lines */) {
 
-    public void updateScoreboard() {
+                if(getLines().get(i) != null) {
+                    getScoreboard().resetScores(getLines().get(i));
+                }
 
-        Objective objective = getPlayer().getScoreboard().getObjective(DisplaySlot.SIDEBAR);
+                continue;
+            }
 
-        if(objective == null /* If it was un-registered, removed, or any other event */)
-            return;
-
-        objective.setDisplayName(preset.getScore(0));
-
-        if (!presetChanged) {
-
-            // Update the preset
-            updatePreset();
-
-        } else {
-
-            if (previousScores == null)
-                return;
-
-            // Reset previous scores
-            for (String previousScore : previousScores) objective.getScoreboard().resetScores(previousScore);
-
-            for (int i = 1; i < preset.getScores().size(); i++) {
-
-                String line = preset.getScore(i);
-
-                if (line.length() > 40)
-                    line = line.substring(0, 39); /* The line can't be more than 40 characters */
-
-                // Set scores
-                objective.getScore(line).setScore(16 - i);
+            if(getLines().get(i) == null || !getLines().get(i).equals(currentLines.get(i)) /* A line was updated or has been removed */) {
+                lines.add(currentLines.get(i));
             }
         }
+
+        for(int i = 0; i < lines.size(); i++) {
+
+            String line = lines.get(i);
+            getObjective().getScore(line).setScore(15 - i);
+        }
     }
 
     /**
-     * Updates the current preset by recording the previous entries, and updating to new entries.
+     * Gets the scoreboard of the player.
+     *
+     * @param player The player whom you're getting the scoreboard from.
+     * @return The scoreboard assigned/associated to the player.
      */
 
-    public void updatePreset() {
+    public Scoreboard getScoreboard(Player player) {
 
-        previousScores = new ArrayList<>(preset.getScores());
-        preset.updateScores();
+        return scoreboards.get(player.getUniqueId());
     }
 
     /**
-     * @return The owner of the scoreboard.
+     * @return The scoreboard created, from the class constructor.
      */
 
-    public Player getPlayer() {
-        return player;
+    public Scoreboard getScoreboard() {
+        return scoreboard;
     }
 
     /**
-     * @return The current scoreboard preset.
+     * @return The scoreboard objective, as defined in the class constructor.
      */
 
-    public ScoreboardPreset getPreset() {
-        return preset;
+    public Objective getObjective() {
+        return objective;
     }
 
     /**
-     * @param preset The preset you're setting/updating
+     * @return The {@link List<String>} of all scoreboard lines.
      */
 
-    public void setPreset(ScoreboardPreset preset) {
-
-        // Updates the preset
-        this.preset = preset;
-
-        // Save previous scores
-        previousScores = new ArrayList<>(getPreset().getScores());
-
-        // Change status
-        presetChanged = true;
-
-        // Update scoreboard
+    public List<String> getLines() {
+        return lines;
     }
 }

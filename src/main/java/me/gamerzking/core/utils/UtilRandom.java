@@ -2,9 +2,6 @@ package me.gamerzking.core.utils;
 
 import java.util.List;
 import java.util.Random;
-import java.util.Set;
-
-import static javafx.scene.input.KeyCode.T;
 
 /**
  * Created by GamerzKing on 4/16/2016.
@@ -66,7 +63,7 @@ public class UtilRandom {
     }
 
     /**
-     * @return The random instance (instance variable)
+     * @return The random instance.
      */
 
     public static Random getRandom() {

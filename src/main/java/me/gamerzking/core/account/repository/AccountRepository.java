@@ -1,7 +1,5 @@
 package me.gamerzking.core.account.repository;
 
-import me.gamerzking.core.Core;
-
 /**
  * Created by GamerzKing on 6/6/2016.
  */

@@ -13,7 +13,7 @@ public class UtilUUID {
     private UtilUUID() {}
 
     /**
-     * Gets the raw unique id without hyphens.
+     * Gets the raw unique id, without hyphens.
      *
      * @param uuid The unique id you're removing the hyphens from.
      * @return The unique id, as a string, without hyphens.

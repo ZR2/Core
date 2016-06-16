@@ -12,8 +12,8 @@ public class UtilReflection {
      */
     private UtilReflection() {}
 
-    public static Class<?> getClass(String name) throws ClassNotFoundException {
+    public static Class<?> getClass(String prefix, String name) throws ClassNotFoundException {
 
-        return Class.forName("net.minecraft.server." + Bukkit.getVersion() + "." + name);
+        return Class.forName(prefix + Bukkit.getVersion() + "." + name);
     }
 }
