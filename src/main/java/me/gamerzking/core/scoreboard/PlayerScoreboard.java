@@ -3,32 +3,30 @@ package me.gamerzking.core.scoreboard;
 import me.gamerzking.core.utils.UtilRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by GamerzKing on 5/31/2016.
  */
-public abstract class PlayerScoreboard {
+public class PlayerScoreboard {
 
     private Scoreboard scoreboard;
     private Objective objective;
 
     private List<String> lines = new ArrayList<>();
-    private Map<UUID, Scoreboard> scoreboards = new HashMap<>();
 
     /**
-     * @param player The owner of the scoreboard. Mainly used for per player statistics and other data.
+     * @param title The title of the scoreboard
      */
 
-    public PlayerScoreboard(String title, Player player) {
+    public PlayerScoreboard(String title) {
 
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
-        scoreboards.put(player.getUniqueId(), scoreboard);
 
         objective = scoreboard.registerNewObjective("Board" + UtilRandom.getRandomInt(9999999), "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
@@ -44,7 +42,6 @@ public abstract class PlayerScoreboard {
     public void addLine(String text) {
 
         text = abbreviate(text); /* Make sure it can't be more than 16 characters */
-
         lines.add(text);
     }
 
@@ -119,18 +116,6 @@ public abstract class PlayerScoreboard {
             String line = lines.get(i);
             getObjective().getScore(line).setScore(15 - i);
         }
-    }
-
-    /**
-     * Gets the scoreboard of the player.
-     *
-     * @param player The player whom you're getting the scoreboard from.
-     * @return The scoreboard assigned/associated to the player.
-     */
-
-    public Scoreboard getScoreboard(Player player) {
-
-        return scoreboards.get(player.getUniqueId());
     }
 
     /**

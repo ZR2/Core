@@ -1,3 +1,2 @@
 # Core
-The most useful plugin gamerz and I have probably ever made.
-dont steal code plz <3
+The core plugin to be used across the network. Includes multiple utilities, database integration, command management system, etc.
