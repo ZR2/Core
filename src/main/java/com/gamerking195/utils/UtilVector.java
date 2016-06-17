@@ -16,7 +16,6 @@ public class UtilVector
 	public static Vector getSpeedAsVector(Location loc, double speed)
 	{
 		Vector direction = loc.getDirection();
-		Vector velocity = direction.multiply(speed/50);
-		return velocity;
+		return direction.multiply(speed/25);
 	}
 }

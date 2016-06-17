@@ -174,15 +174,16 @@ public class ItemBuilder {
 	}
 
 	/**
-	 * Sets the color of the wool to the specified DyeColor.
+	 * Sets the color of wool, stained glass, or clay.
 	 *
-	 * @param color The color you are applying to the wool.
+	 * @param color The color you are applying to the item.
 	 * @return The item with the specified color applied to it.
 	 */
 
-	public ItemBuilder setWoolColor(DyeColor color) {
+	@SuppressWarnings("deprecation")
+	public ItemBuilder setColor(DyeColor color) {
 
-		if(itemStack.getType() != Material.WOOL)
+		if(itemStack.getType() != Material.WOOL && itemStack.getType() != Material.STAINED_GLASS && itemStack.getType() != Material.STAINED_GLASS_PANE && itemStack.getType() != Material.STAINED_CLAY)
 			return this;
 
 		itemStack.setDurability(color.getData());
@@ -249,6 +250,21 @@ public class ItemBuilder {
 
         else
             itemStack.getItemMeta().removeItemFlags(flag);
+		
+		return this;
+	}
+	
+	
+	/**
+	 * 
+	 * Sets the amount of items in an item stack.
+	 * 
+	 * @param amount The amount of items the itemstack will have.
+	 * @return The item with the modified amount.
+	 */
+	public ItemBuilder setAmount(int amount)
+	{
+		itemStack.setAmount(amount);
 		
 		return this;
 	}
