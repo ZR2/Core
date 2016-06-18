@@ -18,12 +18,14 @@ import java.util.*;
 public class ItemBuilder {
 
 	private ItemStack itemStack;
+	private ItemMeta itemMeta;
 
 	/**
 	 * @param material The material the item will be built with.
 	 */
 
-	public ItemBuilder(Material material) {
+	public ItemBuilder(Material material) 
+	{
 		this(material, 1);
 	}
 
@@ -31,7 +33,8 @@ public class ItemBuilder {
 	 * @param itemStack The ItemStack being used to build the item.
 	 */
 
-	public ItemBuilder(ItemStack itemStack) {
+	public ItemBuilder(ItemStack itemStack) 
+	{
 		this.itemStack = itemStack;
 	}
 
@@ -40,16 +43,25 @@ public class ItemBuilder {
 	 * @param amount The quanity of items that will be built.
 	 */
 
-	public ItemBuilder(Material material, int amount) {
-		this.itemStack = new ItemStack(material, amount);
+	public ItemBuilder(Material material, int amount) 
+	{
+		this(material, amount, new ItemStack(material, amount).getItemMeta());
 	}
+	
+	public ItemBuilder(Material material, int amount, ItemMeta meta) 
+	{
+		this.itemStack = new ItemStack(material, amount);
+		this.itemMeta = meta;
+	}
+
 
 	/**
 	 * @return Creates and returns a copied build of the item.
 	 */
 
-	public ItemBuilder clone() {
-		return new ItemBuilder(itemStack);
+	public ItemBuilder clone() 
+	{
+		return new ItemBuilder(itemStack.getType(), itemStack.getAmount(), itemMeta);
 	}
 
 	/**
@@ -74,7 +86,7 @@ public class ItemBuilder {
 
 	public ItemBuilder setName(String name) {
 
-		itemStack.getItemMeta().setDisplayName(name);
+		itemMeta.setDisplayName(name);
 		return this;
 	}
 
@@ -100,7 +112,7 @@ public class ItemBuilder {
 
 	public ItemBuilder setSkullOwner(String owner) {
 
-		SkullMeta skullMeta = (SkullMeta) itemStack.getItemMeta();
+		SkullMeta skullMeta = (SkullMeta) itemMeta;
 		skullMeta.setOwner(owner);
 
 		return this;
@@ -116,7 +128,7 @@ public class ItemBuilder {
 
 	public ItemBuilder addEnchant(Enchantment enchantment, int level) {
 
-		itemStack.getItemMeta().addEnchant(enchantment, level, true);
+		itemMeta.addEnchant(enchantment, level, true);
 		return this;
 	}
 
@@ -156,7 +168,7 @@ public class ItemBuilder {
 
 	public ItemBuilder setUnbreakable(boolean unbreakable) {
 
-		itemStack.getItemMeta().spigot().setUnbreakable(unbreakable);
+		itemMeta.spigot().setUnbreakable(unbreakable);
 		return this;
 	}
 
@@ -169,7 +181,7 @@ public class ItemBuilder {
 
 	public ItemBuilder setLore(String... lore){
 
-		itemStack.getItemMeta().setLore(Arrays.asList(lore));
+		itemMeta.setLore(Arrays.asList(lore));
 		return this;
 	}
 
@@ -199,7 +211,7 @@ public class ItemBuilder {
 
 	public ItemBuilder setArmorColor(Color color) {
 
-		LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) itemStack.getItemMeta();
+		LeatherArmorMeta leatherArmorMeta = (LeatherArmorMeta) itemMeta;
 
 		leatherArmorMeta.setColor(color);
 		itemStack.setItemMeta(leatherArmorMeta);
@@ -219,17 +231,17 @@ public class ItemBuilder {
 			for (ItemFlag flag : ItemFlag.values())
 			{
 				if (flag == null) continue;
-				itemStack.getItemMeta().addItemFlags(flag);
+				itemMeta.addItemFlags(flag);
 			}
-			itemStack.getItemMeta().addItemFlags(ItemFlag.values());
+			itemMeta.addItemFlags(ItemFlag.values());
 		}
 		else
 		{
 			for (ItemFlag flag : ItemFlag.values())
 			{
 				if (flag == null) continue;
-				if (!itemStack.getItemMeta().hasItemFlag(flag)) continue;
-				itemStack.getItemMeta().removeItemFlags(flag);
+				if (!itemMeta.hasItemFlag(flag)) continue;
+				itemMeta.removeItemFlags(flag);
 			}
 		}
 		return this;
@@ -246,10 +258,10 @@ public class ItemBuilder {
 	public ItemBuilder setFlag(ItemFlag flag, boolean hide) {
 
         if (hide && itemStack.hasItemMeta())
-            itemStack.getItemMeta().addItemFlags(flag);
+            itemMeta.addItemFlags(flag);
 
         else
-            itemStack.getItemMeta().removeItemFlags(flag);
+            itemMeta.removeItemFlags(flag);
 		
 		return this;
 	}
@@ -273,8 +285,9 @@ public class ItemBuilder {
 	 * @return The built item.
 	 */
 
-	public ItemStack build() {
-
+	public ItemStack build() 
+	{
+		itemStack.setItemMeta(itemMeta);
 		return itemStack;
 	}
 }
