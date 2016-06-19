@@ -1,10 +1,6 @@
 package me.gamerzking.core.itemstack;
 
-import net.minecraft.server.v1_9_R2.NBTTagCompound;
-import net.minecraft.server.v1_9_R2.NBTTagList;
-
 import org.bukkit.*;
-import org.bukkit.craftbukkit.v1_9_R2.inventory.CraftItemStack;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -139,23 +135,7 @@ public class ItemBuilder {
 	 */
 
 	public ItemBuilder addGlow() {
-
-		net.minecraft.server.v1_9_R2.ItemStack nmsStack = CraftItemStack.asNMSCopy(itemStack);
-		NBTTagCompound tag = null;
-
-		if (!nmsStack.hasTag()) {
-			tag = new NBTTagCompound();
-			nmsStack.setTag(tag);
-		}
-
-		if (tag == null) tag = nmsStack.getTag();
-
-		NBTTagList ench = new NBTTagList();
-
-		tag.set("ench", ench);
-		nmsStack.setTag(tag);
-
-		itemStack = CraftItemStack.asCraftMirror(nmsStack);
+		// TODO: 6/17/2016
 		return this;
 	}
 

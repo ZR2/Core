@@ -1,5 +1,7 @@
 package me.gamerzking.core.utils;
 
+import org.apache.commons.lang.WordUtils;
+
 import java.util.Collection;
 
 /**
@@ -34,6 +36,22 @@ public class UtilText {
         }
 
         return out;
+    }
+
+    /**
+     * Gets the friendly name from an enumeration value.
+     *
+     * @param object The enumeration value you're getting the friendly name from.
+     *
+     * Example: OBSIDIAN -> Obsidian
+     * Example: GLOWSTONE_DUST -> Glowstone Dust
+     *
+     * @return The name capitalized and spaced.
+     */
+
+    public static String getFriendlyName(Object object) {
+
+        return WordUtils.capitalizeFully(object.toString().replace("_", ""));
     }
 
     /**

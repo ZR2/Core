@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Created by GamerzKing on 5/31/2016.
  */
-public abstract class BaseCommand implements ICommand {
+public abstract class AbstractCommand implements ICommand {
 
     private Rank requiredRank;
     private Rank[] specificRanks;
@@ -21,7 +21,7 @@ public abstract class BaseCommand implements ICommand {
      * @param aliases The aliases associated with the command.
      */
 
-    public BaseCommand(Rank requiredRank, String... aliases) {
+    public AbstractCommand(Rank requiredRank, String... aliases) {
 
         this(requiredRank, null, aliases);
     }
@@ -32,7 +32,7 @@ public abstract class BaseCommand implements ICommand {
      * @param aliases The aliases associated with the command.
      */
 
-    public BaseCommand(Rank requiredRank, Rank[] specificRanks, String... aliases) {
+    public AbstractCommand(Rank requiredRank, Rank[] specificRanks, String... aliases) {
 
         this.requiredRank = requiredRank;
         this.specificRanks = specificRanks;

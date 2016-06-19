@@ -39,7 +39,7 @@ public class UtilFirework {
         try {
 
             Class<?> entityFireworkClass = UtilReflection.getClass("net.minecraft.server.", "EntityFireworks");
-            Class<?> craftFireworkClass = UtilReflection.getClass("org.bukkit.craftbukkit.", "entity.CraftFirework");
+            Class<?> craftFireworkClass = UtilReflection.getClass("org.bukkit.craftbukkit", "entity.CraftFirework");
 
             Object objectFirework = craftFireworkClass.cast(firework);
             Method handle = firework.getClass().getMethod("getHandle");

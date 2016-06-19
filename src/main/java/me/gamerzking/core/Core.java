@@ -1,5 +1,6 @@
 package me.gamerzking.core;
 
+import me.gamerzking.core.blood.Blood;
 import me.gamerzking.core.command.CommandManager;
 import me.gamerzking.core.database.DatabaseManager;
 import me.gamerzking.core.friend.commands.FriendCommand;
@@ -24,6 +25,7 @@ public class Core extends JavaPlugin {
 
     private static Core instance;
 
+    private Blood blood;
     private Portal portal;
     private Updater updater;
 
@@ -36,6 +38,7 @@ public class Core extends JavaPlugin {
 
         instance = this;
 
+        //blood = new Blood(this);
         portal = new Portal(this);
         updater = new Updater(this);
 
@@ -86,6 +89,7 @@ public class Core extends JavaPlugin {
      */
 
     public void registerEvents(Listener... listeners) {
+
         Arrays.stream(listeners).forEach(listener -> getServer().getPluginManager().registerEvents(listener, getInstance()));
     }
 
@@ -96,7 +100,12 @@ public class Core extends JavaPlugin {
      */
 
     public void unregisterEvents(Listener... listeners) {
+
         Arrays.stream(listeners).forEach(HandlerList::unregisterAll);
+    }
+
+    public Blood getBlood() {
+        return blood;
     }
 
     public Portal getPortal() {
@@ -107,15 +116,17 @@ public class Core extends JavaPlugin {
         return updater;
     }
 
-    public CommandManager getCommandManager() {
+    private CommandManager getCommandManager() {
         return commandManager;
     }
 
+    /*
     public DatabaseManager getDatabaseManager() {
         return databaseManager;
     }
+    */
 
-    public PartyManager getPartyManager() {
+    private PartyManager getPartyManager() {
         return partyManager;
     }
 

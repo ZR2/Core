@@ -1,7 +1,7 @@
 package me.gamerzking.core.party.commands;
 
 import me.gamerzking.core.Core;
-import me.gamerzking.core.command.BaseCommand;
+import me.gamerzking.core.command.AbstractCommand;
 import me.gamerzking.core.party.Party;
 import me.gamerzking.core.party.PartyManager;
 import me.gamerzking.core.party.PartyRank;
@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * Created by GamerzKing on 6/1/2016.
  */
-public class PartyCommand extends BaseCommand {
+public class PartyCommand extends AbstractCommand {
 
     private PartyManager manager;
 
@@ -119,8 +119,10 @@ public class PartyCommand extends BaseCommand {
 
         party.invitePlayer(target);
 
-        target.sendMessage(player.getName() + " invited you to their party!");
-        new FancyMessage("Click here ").color(ChatColor.GREEN).command("party accept " + player.getName()).then("to join the party!").color(ChatColor.GRAY).send(target);
+        new FancyMessage(
+
+                "Click here ").color(ChatColor.GREEN).tooltip("Click to execute /party accept " + player.getName()).command("/party accept " + player.getName()).
+                then("to join the party!").color(ChatColor.GRAY).send(target);
     }
 
     /**
@@ -236,7 +238,7 @@ public class PartyCommand extends BaseCommand {
      * @param args The arguments of the command.
      */
 
-    public void remove(Player player, String[] args) {
+    private void remove(Player player, String[] args) {
 
         Party party = manager.getParty(player);
 

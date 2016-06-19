@@ -1,13 +1,13 @@
 package me.gamerzking.core.friend.commands;
 
-import me.gamerzking.core.command.BaseCommand;
+import me.gamerzking.core.command.AbstractCommand;
 import me.gamerzking.core.rank.Rank;
 import org.bukkit.entity.Player;
 
 /**
  * Created by GamerzKing on 6/1/2016.
  */
-public class FriendCommand extends BaseCommand {
+public class FriendCommand extends AbstractCommand {
 
     public FriendCommand() {
 

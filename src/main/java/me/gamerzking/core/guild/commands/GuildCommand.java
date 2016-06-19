@@ -1,6 +1,6 @@
 package me.gamerzking.core.guild.commands;
 
-import me.gamerzking.core.command.BaseCommand;
+import me.gamerzking.core.command.AbstractCommand;
 import me.gamerzking.core.guild.ui.GuildShop;
 import me.gamerzking.core.rank.Rank;
 import org.bukkit.entity.Player;
@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 /**
  * Created by GamerzKing on 5/31/2016.
  */
-public class GuildCommand extends BaseCommand {
+public class GuildCommand extends AbstractCommand {
 
     private GuildShop shop = new GuildShop();
 
@@ -16,7 +16,8 @@ public class GuildCommand extends BaseCommand {
 
         super(
                 Rank.PLAYER,
-                "g", "guild");
+                "g", "guild"
+        );
     }
 
     @Override
