@@ -1,9 +1,9 @@
 package me.gamerzking.core.utils;
 
+import me.gamerzking.core.Core;
+import org.bukkit.Bukkit;
 import org.bukkit.entity.LivingEntity;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import org.bukkit.metadata.FixedMetadataValue;
 
 /**
  * Created by GamerzKing on 6/16/2016.
@@ -18,11 +18,16 @@ public class UtilEntity {
 
     public static void silence(LivingEntity entity) {
 
+        entity.setMetadata("Silent", new FixedMetadataValue(Core.getInstance(), 1));
+        Bukkit.broadcastMessage("Set the Metadata of the entity to silent, with a value of: " + entity.getMetadata("Silent"));
+
+        /*
+
         try {
 
             Class<?> craftEntity = UtilReflection.getClass("org.bukkit.craftbukkit", "entity.CraftEntity");
+            System.out.println("Searching for CraftEntity.java class...");
 
-            Object objectEntity = craftEntity.cast(entity);
             Method handle = entity.getClass().getMethod("getHandle");
 
             Object entityHandle = handle.invoke(entity);
@@ -32,12 +37,16 @@ public class UtilEntity {
             //Field fieldF = craftEntity.getDeclaredField("f");
 
             fieldC.setAccessible(true);
-            fieldC.set("Silent", (byte) 1);
+            fieldC.set("Silent", 1);
             fieldC.setAccessible(false);
 
         } catch (Exception e) {
-            e.printStackTrace();
+
+            //e.printStackTrace();
+            Bukkit.broadcastMessage("Class not found!");
         }
+
+        */
     }
 
     /**

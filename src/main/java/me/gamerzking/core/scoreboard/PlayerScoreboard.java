@@ -66,6 +66,15 @@ public class PlayerScoreboard {
     }
 
     /**
+     * Resets the current scoreboard by removing all of its elements.
+     */
+
+    public void resetScoreboard() {
+
+        lines.clear();
+    }
+
+    /**
      * Builds the current scoreboard.
      */
 
