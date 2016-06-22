@@ -48,19 +48,48 @@ public class UtilPlayer {
 		return closestPlayer;
 	}
 
-	public static Entity getEntityInSight(Player player, float expandBoxes)
-	{
-		for (Entity e : player.getWorld().getEntities())
-		{
+	/**
+	 * Gets the entity in the players sight.
+	 *
+	 * @param player The player whom your getting the vision/sight from.
+	 * @param expandBoxes How far the hitboxes should expand.
+     * @return Any entities in the players sight. If there are none, returns null.
+     */
+
+	public static Entity getEntityInSight(Player player, float expandBoxes) {
+
+		for (Entity e : player.getWorld().getEntities()) {
+
 			Vector toEntity = e.getLocation().toVector().subtract(player.getLocation().toVector());
 			Vector direction = player.getLocation().getDirection();
+
 			double dot = toEntity.normalize().dot(direction);
-			
-			if (dot > 1-expandBoxes && dot < 1+expandBoxes)
-			{
+
+			if (dot > 1 - expandBoxes && dot < 1 + expandBoxes)
 				return e;
-			}
 		}
+
 		return null;
+	}
+
+	/**
+	 * Sends the designated packet to the specific player.
+	 *
+	 * @param player The player you're sending the packet to.
+	 * @param packet The packet you're sending to the player.
+	 */
+
+	public static void sendPacket(Player player, Object packet) {
+
+		try {
+
+			Object handle = player.getClass().getMethod("getHandle").invoke(player);
+			Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
+			playerConnection.getClass().getMethod("sendPacket", UtilReflection.getClass("net.minecraft.server", "Packet")).invoke(playerConnection, packet);
+		}
+
+		catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

@@ -11,12 +11,12 @@ import java.util.Set;
  */
 public class UtilMaterial {
 
-    private static Set<Material> swords = new HashSet<>();
-
     /**
      * Don't let anyone instantiate this class.
      */
     private UtilMaterial() {}
+
+    private static Set<Material> swords = new HashSet<>();
 
     /**
      * Checks if the {@link org.bukkit.inventory.ItemStack} provided is equal to the Material provided.
