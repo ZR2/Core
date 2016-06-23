@@ -85,7 +85,7 @@ public class UtilPlayer {
 
 			Object handle = player.getClass().getMethod("getHandle").invoke(player);
 			Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
-			playerConnection.getClass().getMethod("sendPacket", UtilReflection.getClass("net.minecraft.server", "Packet")).invoke(playerConnection, packet);
+			playerConnection.getClass().getMethod("sendPacket", UtilReflection.getNmsClass("Packet")).invoke(playerConnection, packet);
 		}
 
 		catch (Exception e) {

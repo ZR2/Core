@@ -25,7 +25,7 @@ public class UtilTitle {
      * @param fadeOut How long it takes for the title to fade out.
      */
 
-    public void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
+    public static void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
 
         try {
 

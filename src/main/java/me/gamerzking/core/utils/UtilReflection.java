@@ -26,7 +26,7 @@ public class UtilReflection {
 
     public static Class<?> getClass(String prefix, String name) throws ClassNotFoundException {
 
-        return Class.forName(prefix + "." + Bukkit.getVersion() + "." + name);
+        return Class.forName(prefix + "." + getVersion() + "." + name);
     }
 
     /**
@@ -53,6 +53,17 @@ public class UtilReflection {
     public static Class<?> getNmsClass(String name) throws ClassNotFoundException {
 
         return getClass("net.minecraft.server", name);
+    }
+
+    /**
+     * Gets the current Bukkit version.
+     *
+     * @return The version that the server is running.
+     */
+
+    public static String getVersion() {
+
+        return Bukkit.getServer().getClass().getPackage().getName().split("\\.")[3];
     }
 
     /**
