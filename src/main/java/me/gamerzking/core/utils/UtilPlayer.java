@@ -1,8 +1,11 @@
 package me.gamerzking.core.utils;
 
+import me.libraryaddict.disguise.DisguiseAPI;
+import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.potion.PotionEffect;
 import org.bukkit.util.Vector;
 
 /**
@@ -11,10 +14,50 @@ import org.bukkit.util.Vector;
 
 public class UtilPlayer {
 
-	/**
-	 * Don't let anyone instantiate this class.
-	 */
-	private UtilPlayer() {}
+    /**
+     * Don't let anyone instantiate this class.
+     */
+    private UtilPlayer() {
+    }
+
+    /**
+     * Resets the player by clearing their effects, clearing their inventory, etc.
+     *
+     * @param player The player you're resetting.
+     */
+
+    public static void reset(Player player) {
+
+        player.setGameMode(GameMode.SURVIVAL);
+        UtilInventory.clearInventory(player);
+
+        player.setAllowFlight(false);
+        player.setFlySpeed(0.1F);
+
+        player.setSprinting(false);
+        player.setSneaking(false);
+
+        player.setFoodLevel(20);
+        player.setSaturation(3F);
+        player.setExhaustion(0F);
+
+        player.setMaxHealth(20);
+        player.setHealth(player.getMaxHealth());
+
+        player.setFireTicks(0);
+        player.setFallDistance(0);
+
+        player.eject();
+        player.leaveVehicle();
+
+        player.setLevel(0);
+        player.setExp(0F);
+
+        for (PotionEffect potion : player.getActivePotionEffects())
+            player.removePotionEffect(potion.getType());
+
+        DisguiseAPI.undisguiseToAll(player);
+    }
 
 	/**
 	 * Gets the closest player to the {@link Location} provided.

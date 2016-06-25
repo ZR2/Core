@@ -55,6 +55,22 @@ public class UtilText {
     }
 
     /**
+     * Parses through the String provided to return the correct value.
+     *
+     * @param string The String you're parsing.
+     *
+     * Example: Obsidian -> OBSIDIAN
+     * Example: Glowstone Dust -> GLOWSTONE_DUST
+     *
+     * @return The correctly parsed name.
+     */
+
+    public static String parseFriendlyName(String string) {
+
+        return string.replace(" ", "_").toUpperCase();
+    }
+
+    /**
      * Gets the amount of uppercase letters in the input.
      *
      * @param input The string you are getting the uppercase count from.

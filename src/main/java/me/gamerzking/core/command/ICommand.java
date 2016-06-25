@@ -11,6 +11,7 @@ import java.util.Collection;
 public interface ICommand {
 
     void execute(Player sender, String[] args);
+    void help(Player player);
 
     Collection<String> getAliases();
 

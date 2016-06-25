@@ -1,6 +1,5 @@
 package me.gamerzking.core.scoreboard;
 
-import me.gamerzking.core.utils.UtilRandom;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -28,7 +27,7 @@ public class PlayerScoreboard {
 
         scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
-        objective = scoreboard.registerNewObjective("Board" + UtilRandom.getRandomInt(9999999), "dummy");
+        objective = scoreboard.registerNewObjective(title, "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(ChatColor.BOLD + title);
     }

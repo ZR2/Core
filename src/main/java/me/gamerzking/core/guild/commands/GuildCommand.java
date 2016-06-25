@@ -29,4 +29,9 @@ public class GuildCommand extends AbstractCommand {
         if(args[0].equalsIgnoreCase("shop"))
             shop.openInventory(sender);
     }
+
+    @Override
+    public void help(Player player) {
+
+    }
 }

@@ -3,6 +3,7 @@ package me.gamerzking.core.utils;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -16,6 +17,23 @@ public class UtilInventory {
      * Don't let anyone instantiate this class.
      */
     private UtilInventory() {}
+
+    /**
+     * Clears the players inventory (including armor, item on cursor, etc.)
+     *
+     * @param player The players inventory you're resetting.
+     */
+
+    public static void clearInventory(Player player) {
+
+        PlayerInventory inventory = player.getInventory();
+
+        inventory.clear();
+        inventory.setArmorContents(new ItemStack[4]);
+        player.setItemOnCursor(new ItemStack(Material.AIR));
+
+        player.saveData();
+    }
 
     /**
      * Removes all of the specified data from the players inventory.

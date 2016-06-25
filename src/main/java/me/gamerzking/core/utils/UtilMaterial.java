@@ -28,10 +28,8 @@ public class UtilMaterial {
 
     public static boolean isMaterial(ItemStack itemStack, Material material) {
 
-        if(itemStack == null)
-            return false;
+        return itemStack != null && itemStack.getType().equals(material);
 
-        return itemStack.getType().equals(material);
     }
 
     /**

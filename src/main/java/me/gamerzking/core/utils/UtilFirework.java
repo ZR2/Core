@@ -38,20 +38,15 @@ public class UtilFirework {
 
         try {
 
-            Class<?> entityFireworkClass = UtilReflection.getClass("net.minecraft.server.", "EntityFireworks");
-            Class<?> craftFireworkClass = UtilReflection.getClass("org.bukkit.craftbukkit", "entity.CraftFirework");
+            Class<?> entityFireworkClass = UtilReflection.getNmsClass("EntityFireworks");
+            Class<?> craftFireworkClass = UtilReflection.getBukkitClass("entity.CraftFirework");
 
-            Object objectFirework = craftFireworkClass.cast(firework);
-            Method handle = firework.getClass().getMethod("getHandle");
-
-            Object entityFirework = handle.invoke(firework);
-
+            Object entityFirework = firework.getClass().getMethod("getHandle").invoke(firework);
             Field expectedLifespan = entityFireworkClass.getDeclaredField("expectedLifespan");
-            Field ticksFlown = entityFireworkClass.getDeclaredField("ticksFlown");
 
-            ticksFlown.setAccessible(true);
-            ticksFlown.setInt(entityFirework, expectedLifespan.getInt(entityFirework) - 1);
-            ticksFlown.setAccessible(false);
+            expectedLifespan.setAccessible(true);
+            expectedLifespan.setInt(entityFirework, 1);
+            expectedLifespan.setAccessible(false);
 
         } catch(Exception e) {
             e.printStackTrace();

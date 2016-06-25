@@ -29,4 +29,9 @@ public class PunishCommand extends AbstractCommand {
 
         //sender.sendMessage(String.valueOf(repository.isPunished(sender)));
     }
+
+    @Override
+    public void help(Player player) {
+
+    }
 }
