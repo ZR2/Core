@@ -19,4 +19,9 @@ public class FriendCommand extends AbstractCommand {
     public void execute(Player sender, String[] args) {
 
     }
+
+    @Override
+    public void help(Player player) {
+
+    }
 }

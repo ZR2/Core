@@ -2,10 +2,6 @@ package me.gamerzking.core.database;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import me.gamerzking.core.Core;
-
-import java.sql.*;
-import java.util.logging.Level;
 
 /**
  * Created by GamerzKing on 6/2/2016.
@@ -47,6 +43,7 @@ public class Database {
 
         config.setUsername(username);
         config.setPassword(password);
+        config.setMaximumPoolSize(10);
 
         dataSource = new HikariDataSource(config);
     }

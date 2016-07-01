@@ -58,6 +58,18 @@ public abstract class MenuPage implements Listener {
      *
      * @param slot      The slot the item will be added to.
      * @param itemStack The ItemStack you're applying to the slot.
+     */
+
+    public void addItem(int slot, ItemStack itemStack) {
+
+        inventory.setItem(slot - 1, itemStack);
+    }
+
+    /**
+     * Adds the specified item to the menu page.
+     *
+     * @param slot      The slot the item will be added to.
+     * @param itemStack The ItemStack you're applying to the slot.
      * @param item      The item that you're adding (handles interaction).
      */
 
@@ -100,5 +112,9 @@ public abstract class MenuPage implements Listener {
 
         if (event.getCurrentItem().equals(placeholder) || item != null)
             item.onClick(player, event);
+    }
+
+    public Map<Integer, MenuItem> getItems() {
+        return items;
     }
 }

@@ -1,9 +1,11 @@
 package me.gamerzking.core.utils;
 
+import me.gamerzking.core.Core;
+import org.bukkit.Location;
+import org.bukkit.entity.Creature;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
-
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
+import org.bukkit.metadata.FixedMetadataValue;
 
 /**
  * Created by GamerzKing on 6/16/2016.
@@ -18,26 +20,7 @@ public class UtilEntity {
 
     public static void silence(LivingEntity entity) {
 
-        try {
-
-            Class<?> craftEntity = UtilReflection.getClass("org.bukkit.craftbukkit", "entity.CraftEntity");
-
-            Object objectEntity = craftEntity.cast(entity);
-            Method handle = entity.getClass().getMethod("getHandle");
-
-            Object entityHandle = handle.invoke(entity);
-            Class<?> compound = UtilReflection.getClass("net.minecraft.server", "NBTTagCompound");
-
-            Field fieldC = craftEntity.getDeclaredField("c");
-            //Field fieldF = craftEntity.getDeclaredField("f");
-
-            fieldC.setAccessible(true);
-            fieldC.set("Silent", (byte) 1);
-            fieldC.setAccessible(false);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        entity.setMetadata("Silent", new FixedMetadataValue(Core.getInstance(), 1));
     }
 
     /**
@@ -49,7 +32,6 @@ public class UtilEntity {
      * @return Whether the entity made it to the location.
      */
 
-/*
     public static boolean moveEntity(Entity entity, Location target, double speed) {
 
         if (!(entity instanceof Creature))
@@ -61,10 +43,11 @@ public class UtilEntity {
         if (entity.getLocation().toVector().subtract(target.toVector()).length() < 2)
             speed = Math.min(speed, 1);
 
-        EntityCreature creature = ((CraftCreature) entity).getHandle();
-        creature.getControllerMove().a(target.getX(), target.getY(), target.getZ(), speed);
+        //EntityCreature creature = ((CraftCreature) entity).getHandle();
+        //creature.getControllerMove().a(target.getX(), target.getY(), target.getZ(), speed);
+
+        // TODO: 6/23/2016 Use reflection to do this, instead of straight up NMS. Maven doesn't support it, and needs to be done. 
 
         return true;
     }
-    */
 }

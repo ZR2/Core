@@ -121,8 +121,8 @@ public class PartyCommand extends AbstractCommand {
 
         new FancyMessage(
 
-                "Click here ").color(ChatColor.GREEN).tooltip("Click to execute /party accept " + player.getName()).command("/party accept " + player.getName()).
-                then("to join the party!").color(ChatColor.GRAY).send(target);
+                "Click here ").color(ChatColor.GREEN).tooltip("Click to execute /party accept " + player.getName()).command("/party accept " + player.getName()).then
+                ("to join the party!").color(ChatColor.GRAY).send(target);
     }
 
     /**
@@ -365,13 +365,8 @@ public class PartyCommand extends AbstractCommand {
         manager.disbandParty(party);
     }
 
-    /**
-     * Sends the available arguments to the player.
-     *
-     * @param player The player you're sending the help to.
-     */
-
-    private void help(Player player) {
+    @Override
+    public void help(Player player) {
 
         player.sendMessage("This will eventually");
         player.sendMessage("become the help message.");
