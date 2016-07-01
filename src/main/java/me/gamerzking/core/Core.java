@@ -99,9 +99,9 @@ public class Core extends JavaPlugin {
     }
 
     /**
-     * Unformats the given {@link String} into a {@link String} without colors.
+     * Un-formats the given {@link String} into a {@link String} without colors.
      *
-     * @param text The text you're unformatting.
+     * @param text The text you're un-formatting.
      */
 
     public String unformat(String text) {

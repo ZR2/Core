@@ -35,31 +35,7 @@ public class NpcManager {
 
     public void addNpc(Player player, String name, String skin, String tags, EntityType type) {
 
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("------------------NPC MANAGER--------------------");
-        System.out.println("Player: " + player.getName());
-        System.out.println("Name: " + name);
-        System.out.println("Skin: " + skin);
-        System.out.println("Tags: " + tags);
-        System.out.println("Type: " + type.toString());
-        System.out.println("-------------------------------------------------");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-        System.out.println("");
-
         Database database = Core.getInstance().getDatabaseManager().getDatabase("user7536");
-
-        if (database == null) {
-
-            System.out.println("The database is null!");
-            return;
-        }
 
         try {
 
