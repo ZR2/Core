@@ -14,6 +14,7 @@ public enum UpdateType {
     SECOND(1000),
     HALF_SECOND(500),
     QUARTER_SECOND(250),
+    SEVENTH_SECOND(142),
     TICK(50);
 
     private long currentTime;
