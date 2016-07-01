@@ -1,63 +1,49 @@
 package me.gamerzking.core.rank;
 
-import me.gamerzking.core.Core;
-
-import java.util.HashMap;
-import java.util.Map;
+import net.md_5.bungee.api.ChatColor;
 
 /**
  * Created by GamerzKing on 4/18/2016.
  */
 public enum Rank {
 
-    PLAYER(0, ""),
-    ADMIN(1, "&cAdmin"),
-    OWNER(1, "&cOwner");
+    PLAYER(""),
 
-    private Core plugin;
+    HELPER("&9Helper"),
+    MOD("&2Mod"),
 
-    private int id;
+    ADMIN("&cAdmin"),
+    OWNER("&cOwner");
+
     private String name;
 
-    Rank(int id, String name) {
+    /**
+     * @param name The name of the rank.
+     */
 
-        this.id = id;
+    Rank(String name) {
+
         this.name = name;
-
-        this.plugin = Core.getInstance();
     }
 
-    private static Map<Integer, Rank> ranks = new HashMap<>();
-
-    static {
-
-        for(Rank rank : values()) {
-            ranks.put(rank.getId(), rank);
-        }
-    }
+    /**
+     * Gets the tag/prefix of the rank.
+     *
+     * @param withColor Whether the String will return with color.
+     * @param withBrackets Whether the String will return with surrounding brackets.
+     * @return The name with color/brackets, as specified.
+     */
 
     public String getName(boolean withColor, boolean withBrackets) {
 
         String out = name;
 
-        if(withColor)
-            out = plugin.format(name);
+        if (withColor)
+            out = ChatColor.translateAlternateColorCodes('&', name);
 
-        if(withBrackets)
+        if (withBrackets)
             out = "[" + name + "]";
 
         return out;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public String getPrefix() {
-        return name;
-    }
-
-    public static Rank valueOf(int id) {
-        return ranks.get(id);
     }
 }

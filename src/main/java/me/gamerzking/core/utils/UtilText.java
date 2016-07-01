@@ -39,6 +39,18 @@ public class UtilText {
     }
 
     /**
+     * Gets whether the character specified is a vowel or not.
+     *
+     * @param character The character you're checking.
+     * @return True if the character provided is a vowel.
+     */
+
+    public static boolean isVowel(char character) {
+
+        return character == 'a' || character == 'e' || character == 'i' || character == 'o' || character == 'u';
+    }
+
+    /**
      * Gets the friendly name from an enumeration value.
      *
      * @param object The enumeration value you're getting the friendly name from.
