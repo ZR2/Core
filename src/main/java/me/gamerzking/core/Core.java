@@ -1,4 +1,4 @@
-package me.gamerzking.core;
+ package me.gamerzking.core;
 
 import me.gamerzking.core.blood.Blood;
 import me.gamerzking.core.command.CommandManager;
@@ -150,9 +150,9 @@ public class Core extends JavaPlugin {
         return databaseManager;
     }
 
-    public NpcManager getNpcManager() {
+   public NpcManager getNpcManager() {
         return npcManager;
-    }
+   }
 
     private PartyManager getPartyManager() {
         return partyManager;
