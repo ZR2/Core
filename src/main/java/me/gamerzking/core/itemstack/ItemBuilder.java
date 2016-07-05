@@ -82,7 +82,7 @@ public class ItemBuilder {
 
 	public ItemBuilder setName(String name) {
 
-		itemMeta.setDisplayName(name);
+		itemMeta.setDisplayName(ChatColor.translateAlternateColorCodes('&', name));
 		return this;
 	}
 
