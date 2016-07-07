@@ -46,7 +46,7 @@ public class Core extends JavaPlugin {
 
         instance = this;
 
-        blood = new Blood(this);
+        //blood = new Blood(this);
         portal = new Portal(this);
         updater = new Updater(this);
 
