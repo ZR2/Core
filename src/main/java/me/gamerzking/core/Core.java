@@ -3,7 +3,6 @@
 import me.gamerzking.core.account.AccountManager;
 import me.gamerzking.core.blood.Blood;
 import me.gamerzking.core.command.CommandManager;
-import me.gamerzking.core.database.DatabaseManager;
 import me.gamerzking.core.friend.commands.FriendCommand;
 import me.gamerzking.core.guild.commands.GuildCommand;
 import me.gamerzking.core.npc.NpcManager;
@@ -34,7 +33,6 @@ public class Core extends JavaPlugin {
 
     private AccountManager accountManager;
     private CommandManager commandManager;
-    private DatabaseManager databaseManager;
     private NpcManager npcManager;
     private PartyManager partyManager;
 
@@ -47,10 +45,9 @@ public class Core extends JavaPlugin {
         portal = new Portal(this);
         updater = new Updater(this);
 
-        accountManager = new AccountManager();
+        accountManager = new AccountManager(this);
         commandManager = new CommandManager();
-        databaseManager = new DatabaseManager();
-        npcManager = new NpcManager();
+        npcManager = new NpcManager(this);
         partyManager = new PartyManager(this);
 
         getCommandManager().addCommand(new FriendCommand());
@@ -130,10 +127,6 @@ public class Core extends JavaPlugin {
 
     private CommandManager getCommandManager() {
         return commandManager;
-    }
-
-    public DatabaseManager getDatabaseManager() {
-        return databaseManager;
     }
 
    public NpcManager getNpcManager() {

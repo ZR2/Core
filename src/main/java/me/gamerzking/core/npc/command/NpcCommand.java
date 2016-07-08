@@ -70,7 +70,7 @@ public class NpcCommand extends AbstractCommand {
         if (args.length >= 5)
             tags = args[4];
 
-        manager.addNpc(player, name, skin, tags, type);
+        manager.getRepository().addNpc(player, name, skin, tags, type);
     }
 
     @Override
