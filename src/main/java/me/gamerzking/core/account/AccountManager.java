@@ -8,4 +8,8 @@ import me.gamerzking.core.account.repository.AccountRepository;
 public class AccountManager {
 
     private AccountRepository repository;
+
+    public AccountRepository getRepository() {
+        return repository;
+    }
 }

@@ -1,7 +1,6 @@
 package me.gamerzking.core.npc;
 
 import me.gamerzking.core.Core;
-import me.gamerzking.core.database.Database;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.NPC;
 import org.bukkit.entity.Player;

@@ -1,10 +1,10 @@
 package me.gamerzking.core.rank.commands;
 
-import me.gamerzking.core.Core;
+import me.gamerzking.core.account.AccountManager;
 import me.gamerzking.core.command.AbstractCommand;
-import me.gamerzking.core.database.Database;
 import me.gamerzking.core.rank.Rank;
 import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 
 import java.sql.Connection;
@@ -16,12 +16,16 @@ import java.sql.SQLException;
  */
 public class RankCommand extends AbstractCommand {
 
-    public RankCommand() {
+    private AccountManager manager;
+
+    public RankCommand(AccountManager manager) {
 
         super(
                 Rank.ADMIN,
                 "rank"
         );
+
+        this.manager = manager;
     }
 
     @Override
@@ -73,12 +77,7 @@ public class RankCommand extends AbstractCommand {
 
         try {
 
-            Database database = Core.getInstance().getDatabaseManager().getDatabase("user7536");
-
-            if (database == null)
-                return;
-
-            Connection connection = database.getDataSource().getConnection();
+            Connection connection = manager.getRepository().getConnection();
             ResultSet set = connection.createStatement().executeQuery("SELECT `rank` FROM `accounts` WHERE uuid = '" + target.getUniqueId() + "' LIMIT 1;");
 
             Bukkit.broadcastMessage(player.getUniqueId().toString());
@@ -108,6 +107,29 @@ public class RankCommand extends AbstractCommand {
 
     private void setRank(Player player, String[] args) {
 
+        if(args.length < 3) {
+
+            // Missing parameters
+            help(player);
+
+            return;
+        }
+
+        Player target = Bukkit.getPlayer(args[1]);
+
+        if(target == null) {
+
+            // Player isn't online
+            player.sendMessage("That player isn't online!");
+
+            return;
+        }
+
+        Rank rank = Rank.valueOf(args[2].toUpperCase());
+
+        manager.getRepository().setRank(target.getUniqueId(), rank);
+
+        player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "Successfully updated " + target.getName() + "'s rank to " + rank.toString());
     }
 
     @Override
