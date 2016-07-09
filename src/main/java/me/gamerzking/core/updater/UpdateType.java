@@ -14,8 +14,8 @@ public enum UpdateType {
     SECOND(1000),
     HALF_SECOND(500),
     QUARTER_SECOND(250),
-    SEVENTH_SECOND(142),
-    TICK(50);
+    TICK(50),
+    CUSTOM(30);
 
     private long currentTime;
     private long milliseconds;
@@ -29,6 +29,22 @@ public enum UpdateType {
         this.milliseconds = milliseconds;
     }
 
+    /**
+     * 
+     * Sets the time for custom millisecond values.
+     * By default CUSTOM is 100 milliseconds
+     * 
+     * @param milliseconds
+     * @return the updatetype.
+     */
+    public UpdateType setTime(long milliseconds)
+    {
+    	if (this == CUSTOM)
+    		this.milliseconds = milliseconds;
+    	
+    	return this;
+    }
+    
     /**
      * @return Whether time has elapsed between the current time, and the milliseconds provided in the constructor.
      */

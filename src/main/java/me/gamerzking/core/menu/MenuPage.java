@@ -1,6 +1,8 @@
 package me.gamerzking.core.menu;
 
 import me.gamerzking.core.Core;
+import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -34,7 +36,7 @@ public abstract class MenuPage implements Listener {
         int size = (rows * 9 > 54 || rows % 9 == 0) ? 54 : rows * 9;
 
         // Creating the inventory
-        inventory = Bukkit.createInventory(null, size, name);
+        inventory = Bukkit.createInventory(null, size, ChatColor.translateAlternateColorCodes('&', name));
 
         if (placeholder != null) {
             for (int i = 0; i < size; i++) {
