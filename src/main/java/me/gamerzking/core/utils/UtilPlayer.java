@@ -69,6 +69,7 @@ public class UtilPlayer {
 
 	public static Player getClosestPlayer(Location location, Entity ignore) {
 
+        Player closestPlayer = null;
 		double maxDistance = 0;
 
 		for (Player player : location.getWorld().getPlayers()) {
@@ -81,11 +82,14 @@ public class UtilPlayer {
 
             double distance = UtilMath.distance(player.getLocation(), location);
 
-            if (distance < maxDistance)
-                return player;
+            if (closestPlayer == null || distance < maxDistance) {
+
+                closestPlayer = player;
+                maxDistance = distance;
+            }
 		}
 
-		return null;
+		return closestPlayer;
 	}
 
 	/**
