@@ -1,5 +1,7 @@
 package me.gamerzking.core.utils;
 
+import net.md_5.bungee.api.ChatColor;
+
 import org.bukkit.entity.Player;
 
 import java.lang.reflect.Constructor;
@@ -25,15 +27,15 @@ public class UtilTitle {
      * @param fadeOut How long it takes for the title to fade out.
      */
 
-    public static void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) {
-
-        try {
-
+    public static void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut) 
+    {
+        try 
+        {
             Object enumTitle = UtilReflection.getNmsClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
             Object enumSubTitle = UtilReflection.getNmsClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("SUBTITLE").get(null);
 
-            Object chatComponent = UtilReflection.getNmsClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + title + "\"}");
-            Object subChatComponent = UtilReflection.getNmsClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + subtitle + "\"}");
+            Object chatComponent = UtilReflection.getNmsClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', title) + "\"}");
+            Object subChatComponent = UtilReflection.getNmsClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', subtitle) + "\"}");
 
             Constructor<?> titleConstructor = UtilReflection.getNmsClass("PacketPlayOutTitle").getConstructor(UtilReflection.getNmsClass("PacketPlayOutTitle").getDeclaredClasses()[0], UtilReflection.getNmsClass("IChatBaseComponent"), int.class, int.class, int.class);
 
@@ -43,7 +45,9 @@ public class UtilTitle {
             UtilPlayer.sendPacket(player, packetTitle);
             UtilPlayer.sendPacket(player, packetSubtitle);
 
-        } catch(Exception e) {
+        } 
+        catch(Exception e)
+        {
             e.printStackTrace();
         }
     }

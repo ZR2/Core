@@ -5,12 +5,12 @@ import org.bukkit.entity.Player;
 public abstract class CustomSound 
 {
 	String name;
-	String path;
+	String event;
 	
 	public CustomSound(String name, String path)
 	{
 		this.name = name;
-		this.path = path;
+		this.event = path;
 	}
 	
 	public abstract void play(float volume, float pitch, Player... players);
@@ -18,5 +18,5 @@ public abstract class CustomSound
 	public abstract void stop(float volume, float pitch, Player... players);
 
 	public String getName() {return name;}
-	public String getPath() {return path;}
+	public String getEvent() {return event;}
 }
