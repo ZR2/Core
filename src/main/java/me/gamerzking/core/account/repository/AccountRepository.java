@@ -40,6 +40,8 @@ public class AccountRepository extends Repository {
             statement.setObject(1, rank.toString());
             statement.setObject(2, uuid.toString());
 
+            statement.executeUpdate();
+
         } catch (SQLException e) {
             e.printStackTrace();
         }

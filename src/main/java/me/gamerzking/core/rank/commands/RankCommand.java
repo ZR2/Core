@@ -3,6 +3,7 @@ package me.gamerzking.core.rank.commands;
 import me.gamerzking.core.account.AccountManager;
 import me.gamerzking.core.command.AbstractCommand;
 import me.gamerzking.core.rank.Rank;
+import org.apache.commons.lang3.EnumUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
@@ -80,9 +81,6 @@ public class RankCommand extends AbstractCommand {
             Connection connection = manager.getRepository().getConnection();
             ResultSet set = connection.createStatement().executeQuery("SELECT `rank` FROM `accounts` WHERE uuid = '" + target.getUniqueId() + "' LIMIT 1;");
 
-            Bukkit.broadcastMessage(player.getUniqueId().toString());
-            Bukkit.broadcastMessage(player.getUniqueId() + "");
-
             if (set.next()) {
 
                 Rank rank = Rank.valueOf(set.getString(1));
@@ -125,8 +123,10 @@ public class RankCommand extends AbstractCommand {
             return;
         }
 
-        Rank rank = Rank.valueOf(args[2].toUpperCase());
+        if(!EnumUtils.isValidEnum(Rank.class, args[2].toUpperCase()))
+            return;
 
+        Rank rank = Rank.valueOf(args[2].toUpperCase());
         manager.getRepository().setRank(target.getUniqueId(), rank);
 
         player.sendMessage(ChatColor.GREEN + ChatColor.BOLD.toString() + "Successfully updated " + target.getName() + "'s rank to " + rank.toString());
