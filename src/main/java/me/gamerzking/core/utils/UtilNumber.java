@@ -8,8 +8,7 @@ public class UtilNumber {
     /**
      * Don't let anyone instantiate this class.
      */
-    private UtilNumber() {
-    }
+    private UtilNumber() {}
 
     /**
      * @param s The string that you're determining.
