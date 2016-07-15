@@ -1,4 +1,4 @@
-package me.gamerzking.core.guild.ui;
+package me.gamerzking.core.collectible.ui.page;
 
 import me.gamerzking.core.itemstack.ItemBuilder;
 import me.gamerzking.core.menu.MenuItem;
@@ -9,24 +9,23 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * Created by GamerzKing on 6/6/2016.
+ * Created by GamerzKing on 7/14/2016.
  */
-public class GuildShop extends MenuPage {
+public class MorphPage extends MenuPage {
 
-    public GuildShop(JavaPlugin plugin) {
-
-        super(plugin, "Guild Shop", 6);
+    public MorphPage(JavaPlugin plugin) {
+        super(plugin, "Morphs", 5);
     }
 
     @Override
     public void buildPage() {
 
-        addItem(3, new ItemBuilder(Material.MELON).build(), new MenuItem() {
+        addItem(0, new ItemBuilder(Material.STONE).setName("&aTesting!").build(), new MenuItem() {
 
             @Override
             public void onClick(Player player, InventoryClickEvent event) {
 
-                player.sendMessage("Hello!");
+                player.closeInventory();
             }
         });
     }

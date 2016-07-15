@@ -21,7 +21,7 @@ public class ServerManager implements Listener {
 
     public ServerManager(JavaPlugin plugin) {
 
-        gameMenu = new ServerGameMenu();
+        gameMenu = new ServerGameMenu(plugin);
 
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }

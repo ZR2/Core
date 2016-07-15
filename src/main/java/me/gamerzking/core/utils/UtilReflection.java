@@ -67,6 +67,25 @@ public class UtilReflection {
     }
 
     /**
+     * Gets the handle of an object (player, entity, etc.)
+     *
+     * @param o The object you're getting its handle from.
+     * @return The handle.
+     */
+
+    public static Object getHandle(Object o) {
+
+        try {
+            return getMethod(o.getClass(), "getHandle").invoke(o);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
+    }
+
+    /**
      * Determines whether the array of methods contains the method name specified.
      *
      * @param methods The array of methods you're searching through.

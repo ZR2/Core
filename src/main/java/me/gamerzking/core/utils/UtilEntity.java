@@ -7,6 +7,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.metadata.FixedMetadataValue;
 
+import java.lang.reflect.Method;
+
 /**
  * Created by GamerzKing on 6/16/2016.
  */
@@ -26,27 +28,38 @@ public class UtilEntity {
     /**
      * Moves the entity towards the designated Location.
      *
-     * @param entity The entity that's being moved.
+     * @param ent The entity that's being moved.
      * @param target The location the target is moving towards.
      * @param speed  The speed the entity will travel at.
      * @return Whether the entity made it to the location.
      */
 
-    public static boolean moveEntity(Entity entity, Location target, double speed) {
+    public static boolean moveEntity(Entity ent, Location target, double speed) {
 
-        if (!(entity instanceof Creature))
+        if (!(ent instanceof Creature))
             return false;
 
-        if (entity.getLocation().toVector().subtract(target.toVector()).length() < 0.1)
+        if (UtilMath.distance(ent.getLocation(), target) < 0.1)
             return false;
 
-        if (entity.getLocation().toVector().subtract(target.toVector()).length() < 2)
+        if (UtilMath.distance(ent.getLocation(), target) < 2)
             speed = Math.min(speed, 1);
 
         //EntityCreature creature = ((CraftCreature) entity).getHandle();
         //creature.getControllerMove().a(target.getX(), target.getY(), target.getZ(), speed);
 
-        // TODO: 6/23/2016 Use reflection to do this, instead of straight up NMS. Maven doesn't support it, and needs to be done. 
+        try {
+
+            Object entityHandle = UtilReflection.getHandle(ent);
+
+            Method getControllerMove = UtilReflection.getMethod(entityHandle.getClass(), "getControllerMove");
+            Method a = getControllerMove.getClass().getDeclaredMethod("a");
+
+            a.invoke(null, target.getX(), target.getY(), target.getZ(), speed);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         return true;
     }

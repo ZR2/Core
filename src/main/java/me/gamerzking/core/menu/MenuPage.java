@@ -1,8 +1,6 @@
 package me.gamerzking.core.menu;
 
-import me.gamerzking.core.Core;
 import net.md_5.bungee.api.ChatColor;
-
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -10,6 +8,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -24,11 +23,11 @@ public abstract class MenuPage implements Listener {
 
     private Map<Integer, MenuItem> items = new HashMap<>();
 
-    public MenuPage(String name, int rows) {
-        this(name, rows, null);
+    public MenuPage(JavaPlugin plugin, String name, int rows) {
+        this(plugin, name, rows, null);
     }
 
-    public MenuPage(String name, int rows, ItemStack placeholder) {
+    public MenuPage(JavaPlugin plugin, String name, int rows, ItemStack placeholder) {
 
         this.placeholder = placeholder;
 
@@ -42,11 +41,11 @@ public abstract class MenuPage implements Listener {
             for (int i = 0; i < size; i++) {
 
                 // Adds the placeholder to the items (so it can't be clicked)
-                addItem(i + 1, placeholder, null);
+                addItem(i, placeholder, null);
             }
         }
 
-        Core.getInstance().registerEvents(this);
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     /**
@@ -64,7 +63,7 @@ public abstract class MenuPage implements Listener {
 
     public void addItem(int slot, ItemStack itemStack) {
 
-        inventory.setItem(slot - 1, itemStack);
+        inventory.setItem(slot, itemStack);
     }
 
     /**
@@ -78,7 +77,7 @@ public abstract class MenuPage implements Listener {
     public void addItem(int slot, ItemStack itemStack, MenuItem item) {
 
         items.put(slot, item);
-        inventory.setItem(slot - 1, itemStack);
+        inventory.setItem(slot, itemStack);
     }
 
     /**
@@ -89,9 +88,6 @@ public abstract class MenuPage implements Listener {
 
     public void openInventory(Player player) {
 
-        // Build Page
-        buildPage();
-
         // Open Inventory
         player.openInventory(inventory);
     }
@@ -99,7 +95,7 @@ public abstract class MenuPage implements Listener {
     @EventHandler
     public void onClick(InventoryClickEvent event) {
 
-        int slot = event.getSlot() + 1;
+        int slot = event.getSlot();
 
         if (!items.containsKey(slot))
             return;

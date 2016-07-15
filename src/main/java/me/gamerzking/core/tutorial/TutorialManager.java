@@ -13,7 +13,6 @@ import java.util.List;
  */
 public class TutorialManager implements Listener {
 
-
     private Core plugin;
     private List<Tutorial> tutorials = new ArrayList<>();
 

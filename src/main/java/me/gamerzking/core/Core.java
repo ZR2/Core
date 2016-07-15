@@ -2,8 +2,10 @@
 
 import me.gamerzking.core.account.AccountManager;
 import me.gamerzking.core.blood.Blood;
+import me.gamerzking.core.collectible.CollectibleManager;
 import me.gamerzking.core.command.CommandManager;
 import me.gamerzking.core.friend.commands.FriendCommand;
+import me.gamerzking.core.guild.GuildManager;
 import me.gamerzking.core.guild.commands.GuildCommand;
 import me.gamerzking.core.npc.NpcManager;
 import me.gamerzking.core.npc.command.NpcCommand;
@@ -32,7 +34,9 @@ public class Core extends JavaPlugin {
     private Updater updater;
 
     private AccountManager accountManager;
+    private CollectibleManager collectibleManager;
     private CommandManager commandManager;
+    private GuildManager guildManager;
     private NpcManager npcManager;
     private PartyManager partyManager;
 
@@ -46,12 +50,14 @@ public class Core extends JavaPlugin {
         updater = new Updater(this);
 
         accountManager = new AccountManager(this);
+        collectibleManager = new CollectibleManager(this);
         commandManager = new CommandManager();
+        guildManager = new GuildManager(this);
         npcManager = new NpcManager(this);
         partyManager = new PartyManager(this);
 
         getCommandManager().addCommand(new FriendCommand());
-        getCommandManager().addCommand(new GuildCommand());
+        getCommandManager().addCommand(new GuildCommand(guildManager));
         getCommandManager().addCommand(new NpcCommand(npcManager));
         getCommandManager().addCommand(new PartyCommand(partyManager));
         getCommandManager().addCommand(new PunishCommand());
