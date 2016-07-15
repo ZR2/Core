@@ -159,9 +159,13 @@ public class ItemBuilder {
 	 * @return The item with the lore applied.
 	 */
 
-	public ItemBuilder setLore(String... lore){
-
-		itemMeta.setLore(Arrays.asList(lore));
+	public ItemBuilder setLore(String... lore)
+	{
+		ArrayList<String> itemLore = new ArrayList<String>();
+		for (String s : lore)
+			itemLore.add(ChatColor.translateAlternateColorCodes('&', s));
+		
+		itemMeta.setLore(itemLore);
 		return this;
 	}
 
