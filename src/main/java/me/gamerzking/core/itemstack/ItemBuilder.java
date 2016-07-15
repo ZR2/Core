@@ -86,6 +86,21 @@ public class ItemBuilder {
 		return this;
 	}
 
+    /**
+     * Adds an enchant to the item being built.
+     *
+     * @param enchantment The chantment you're adding to the item.
+     * @param level The level of the enchantment.
+     * @param restricted Whether it will ignore the default level restricted.
+     * @return The class instance.
+     */
+
+	public ItemBuilder addEnchantment(Enchantment enchantment, int level, boolean restricted) {
+
+        itemMeta.addEnchant(enchantment, level, restricted);
+        return this;
+    }
+
 	/**
 	 * Removes an enchantment from the item being built.
 	 *
@@ -108,8 +123,14 @@ public class ItemBuilder {
 
 	public ItemBuilder setSkullOwner(String owner) {
 
-		SkullMeta skullMeta = (SkullMeta) itemMeta;
-		skullMeta.setOwner(owner);
+        try {
+
+            SkullMeta skullMeta = (SkullMeta) itemMeta;
+            skullMeta.setOwner(owner);
+
+        } catch(ClassCastException e) {
+            System.out.println("Attempted to build an item that isn't a skull!");
+        }
 
 		return this;
 	}
