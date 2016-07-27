@@ -1,9 +1,9 @@
 package me.gamerzking.core.command;
 
-import me.gamerzking.core.Core;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,10 +19,11 @@ public class CommandManager implements Listener {
      * Instantiates the Map of commands and registers the events.
      */
 
-    public CommandManager() {
+    public CommandManager(JavaPlugin plugin) {
 
         commands = new HashMap<>();
-        Core.getInstance().registerEvents(this);
+
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler

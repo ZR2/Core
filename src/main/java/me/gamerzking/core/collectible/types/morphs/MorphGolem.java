@@ -2,8 +2,8 @@ package me.gamerzking.core.collectible.types.morphs;
 
 import me.gamerzking.core.collectible.CollectibleManager;
 import org.bukkit.ChatColor;
-import org.bukkit.Effect;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.player.PlayerToggleSneakEvent;
@@ -38,6 +38,6 @@ public class MorphGolem extends Morph {
         if(!player.isSneaking())
             return;
 
-        player.getWorld().playEffect(player.getLocation(), Effect.STEP_SOUND, 2);
+        player.playSound(player.getLocation(), Sound.ENTITY_MINECART_RIDING, 0.2F, 0.2F);
     }
 }

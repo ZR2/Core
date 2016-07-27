@@ -68,6 +68,11 @@
             <url>http://repo.md-5.net/content/groups/public/</url>
         </repository>
 
+        <repository>
+            <id>elmakers-repo</id>
+            <url>http://maven.elmakers.com/repository/ </url>
+        </repository>
+
     </repositories>
 
     <dependencies>
@@ -101,6 +106,13 @@
             <groupId>LibsDisguises</groupId>
             <artifactId>LibsDisguises</artifactId>
             <version>9.0.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>de.slikey</groupId>
+            <artifactId>EffectLib</artifactId>
+            <version>5.0</version>
+            <scope>compile</scope>
         </dependency>
 
     </dependencies>

@@ -1,7 +1,7 @@
 package me.gamerzking.core.utils;
 
 import java.util.List;
-import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 /**
  * Created by GamerzKing on 4/16/2016.
@@ -13,7 +13,7 @@ public class UtilRandom {
      */
     private UtilRandom() {}
 
-    private static Random random = new Random();
+    private static ThreadLocalRandom random = ThreadLocalRandom.current();
 
     /**
      * Generates a random number.
@@ -66,7 +66,7 @@ public class UtilRandom {
      * @return The random instance.
      */
 
-    public static Random getRandom() {
+    public static ThreadLocalRandom getRandom() {
         return random;
     }
 }

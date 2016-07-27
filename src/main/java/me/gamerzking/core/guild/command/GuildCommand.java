@@ -1,4 +1,4 @@
-package me.gamerzking.core.guild.commands;
+package me.gamerzking.core.guild.command;
 
 import me.gamerzking.core.command.AbstractCommand;
 import me.gamerzking.core.guild.GuildManager;

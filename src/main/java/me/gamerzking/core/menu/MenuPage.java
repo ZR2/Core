@@ -27,12 +27,12 @@ public abstract class MenuPage implements Listener {
         this(plugin, name, rows, null);
     }
 
-    public MenuPage(JavaPlugin plugin, String name, int rows, ItemStack placeholder) {
+    public MenuPage(JavaPlugin plugin, String name, int rowsAmt, ItemStack placeholder) {
 
         this.placeholder = placeholder;
 
-        // If the size of the inventory is greater than 54, or isn't divisible by 9, set the size to 54
-        int size = (rows * 9 > 54 || rows % 9 == 0) ? 54 : rows * 9;
+        int rows = Math.min(6, Math.max(1, rowsAmt));
+        int size = rows * 9;
 
         // Creating the inventory
         inventory = Bukkit.createInventory(null, size, ChatColor.translateAlternateColorCodes('&', name));

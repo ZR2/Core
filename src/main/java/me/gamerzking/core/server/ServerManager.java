@@ -17,11 +17,13 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class ServerManager implements Listener {
 
+    private JavaPlugin plugin;
     private ServerGameMenu gameMenu;
 
     public ServerManager(JavaPlugin plugin) {
 
-        gameMenu = new ServerGameMenu(plugin);
+        this.plugin = plugin;
+        this.gameMenu = new ServerGameMenu(plugin);
 
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
@@ -41,5 +43,9 @@ public class ServerManager implements Listener {
 
         if (UtilMaterial.isMaterial(player.getInventory().getItemInMainHand(), Material.COMPASS))
             gameMenu.openInventory(player);
+    }
+
+    public JavaPlugin getPlugin() {
+        return plugin;
     }
 }

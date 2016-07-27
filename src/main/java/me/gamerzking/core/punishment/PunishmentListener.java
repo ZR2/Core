@@ -1,10 +1,10 @@
 package me.gamerzking.core.punishment;
 
-import me.gamerzking.core.Core;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
+import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Created by GamerzKing on 6/2/2016.
@@ -17,11 +17,11 @@ public class PunishmentListener implements Listener {
      * Registers the events.
      */
 
-    public PunishmentListener(Punishment punishment) {
-
-        Core.getInstance().registerEvents(this);
+    public PunishmentListener(JavaPlugin plugin, Punishment punishment) {
 
         this.punishment = punishment;
+
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
     @EventHandler
