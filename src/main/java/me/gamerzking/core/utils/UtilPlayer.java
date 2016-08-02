@@ -168,4 +168,25 @@ public class UtilPlayer {
 
 		return null;
 	}
+
+    /**
+     * Sends the specified packet to the player.
+     *
+     * @param player The player you're sending the packet to.
+     * @param packet The packet you're sending to the player.
+     */
+
+    public static void sendPacket(Player player, Object packet) {
+
+        try {
+
+            Object handle = player.getClass().getMethod("getHandle").invoke(player);
+            Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
+
+            playerConnection.getClass().getMethod("sendPacket", UtilReflection.PackageType.MINECRAFT_SERVER.getClass("Packet")).invoke(playerConnection, packet);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }
