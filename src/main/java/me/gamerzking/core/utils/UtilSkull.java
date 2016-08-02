@@ -18,8 +18,7 @@ public class UtilSkull {
     /**
      * Don't let anyone instantiate this class.
      */
-    private UtilSkull() {
-    }
+    private UtilSkull() {}
 
     /**
      * Gets a skull from a URL.

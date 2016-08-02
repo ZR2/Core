@@ -6,7 +6,6 @@ import org.bukkit.entity.Firework;
 import org.bukkit.inventory.meta.FireworkMeta;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 
 /**
  * Created by GamerzKing on 4/15/2016.
@@ -37,9 +36,8 @@ public class UtilFirework {
         firework.setFireworkMeta(data);
 
         try {
-
-            Class<?> entityFireworkClass = UtilReflection.getNmsClass("EntityFireworks");
-            Class<?> craftFireworkClass = UtilReflection.getBukkitClass("entity.CraftFirework");
+            
+            Class<?> entityFireworkClass = UtilReflection.PackageType.MINECRAFT_SERVER.getClass("EntityFireworks");
 
             Object entityFirework = firework.getClass().getMethod("getHandle").invoke(firework);
             Field expectedLifespan = entityFireworkClass.getDeclaredField("expectedLifespan");

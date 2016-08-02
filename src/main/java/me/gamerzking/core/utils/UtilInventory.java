@@ -36,6 +36,49 @@ public class UtilInventory {
     }
 
     /**
+     * Removes the item from the players inventory.
+     *
+     * @param player The players inventory that you're removing the items from.
+     * @param material The type of Material that you're removing from the player.
+     * @param data The data of the item you're removing from the player.
+     * @param amount The amount of items that are being removed.
+     */
+
+    public static void removeItem(Player player, Material material, byte data, int amount) {
+
+        if(!player.getInventory().contains(material, amount))
+            return;
+
+        for (int i : player.getInventory().all(material).keySet()) {
+
+            if (amount <= 0)
+                continue;
+
+            ItemStack stack = player.getInventory().getItem(i);
+
+            if (stack.getData() == null || stack.getData().getData() == data) {
+
+                int foundAmount = stack.getAmount();
+
+                if (amount >= foundAmount) {
+
+                    amount -= foundAmount;
+                    player.getInventory().setItem(i, null);
+
+                } else {
+
+                    stack.setAmount(foundAmount - amount);
+                    player.getInventory().setItem(i, stack);
+
+                    amount = 0;
+                }
+            }
+        }
+
+        player.updateInventory();
+    }
+
+    /**
      * Removes all of the specified data from the players inventory.
      *
      * @param player The players inventory that you're removing the items from.

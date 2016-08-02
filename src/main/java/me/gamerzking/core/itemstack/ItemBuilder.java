@@ -39,13 +39,13 @@ public class ItemBuilder {
 	 * @param amount The quanity of items that will be built.
 	 */
 
-	public ItemBuilder(Material material, int amount) 
-	{
+	public ItemBuilder(Material material, int amount) {
+
 		this(material, amount, new ItemStack(material, amount).getItemMeta());
 	}
 	
-	public ItemBuilder(Material material, int amount, ItemMeta meta) 
-	{
+	public ItemBuilder(Material material, int amount, ItemMeta meta) {
+
 		this.itemStack = new ItemStack(material, amount);
 		this.itemMeta = meta;
 	}
@@ -173,6 +173,19 @@ public class ItemBuilder {
 		return this;
 	}
 
+    /**
+     * Sets the lore of the item.
+     *
+     * @param lore The lore you are applying to the item.
+     * @return The item with the lore applied.
+     */
+
+    public ItemBuilder setLore(List<String> lore) {
+
+        itemMeta.setLore(lore);
+        return this;
+    }
+
 	/**
 	 * Sets the lore of the item.
 	 *
@@ -180,13 +193,9 @@ public class ItemBuilder {
 	 * @return The item with the lore applied.
 	 */
 
-	public ItemBuilder setLore(String... lore)
-	{
-		ArrayList<String> itemLore = new ArrayList<String>();
-		for (String s : lore)
-			itemLore.add(ChatColor.translateAlternateColorCodes('&', s));
+	public ItemBuilder setLore(String... lore) {
 		
-		itemMeta.setLore(itemLore);
+		itemMeta.setLore(Arrays.asList(lore));
 		return this;
 	}
 

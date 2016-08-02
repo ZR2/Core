@@ -1,6 +1,7 @@
 package me.gamerzking.core.utils;
 
 import me.libraryaddict.disguise.DisguiseAPI;
+import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -14,10 +15,62 @@ import org.bukkit.util.Vector;
 
 public class UtilPlayer {
 
+    private final static int CENTER_PX = 154;
+
     /**
      * Don't let anyone instantiate this class.
      */
-    private UtilPlayer() {
+    private UtilPlayer() {}
+
+	public static void sendCenteredMessage(Player player, String message) {
+
+        if(message == null || message.equals(""))
+            player.sendMessage("");
+
+        message = ChatColor.translateAlternateColorCodes('&', message);
+
+        int messagePxSize = 0;
+        boolean previousCode = false;
+        boolean isBold = false;
+
+        for(char c : message.toCharArray()) {
+
+            if(c == '§') {
+                previousCode = true;
+
+            } else if(previousCode) {
+                previousCode = false;
+
+                if(c == 'l' || c == 'L') {
+                    isBold = true;
+
+                } else {
+                    isBold = false;
+                }
+
+            } else {
+
+                DefaultFontInfo fontInfo = DefaultFontInfo.getDefaultFontInfo(c);
+
+                messagePxSize += isBold ? fontInfo.getBoldLength() : fontInfo.getLength();
+                messagePxSize++;
+            }
+        }
+
+        int halvedMessageSize = messagePxSize / 2;
+        int toCompensate = CENTER_PX - halvedMessageSize;
+        int spaceLength = DefaultFontInfo.SPACE.getLength() + 1;
+        int compensated = 0;
+
+        StringBuilder sb = new StringBuilder();
+
+        while(compensated < toCompensate) {
+
+            sb.append(" ");
+            compensated += spaceLength;
+        }
+
+        player.sendMessage(sb.toString() + message);
     }
 
     /**
@@ -26,7 +79,7 @@ public class UtilPlayer {
      * @param player The player you're resetting.
      */
 
-    public static void reset(Player player) {
+    public static void resetPlayer(Player player) {
 
         player.setGameMode(GameMode.SURVIVAL);
         UtilInventory.clearInventory(player);
@@ -114,26 +167,5 @@ public class UtilPlayer {
 		}
 
 		return null;
-	}
-
-	/**
-	 * Sends the designated packet to the specific player.
-	 *
-	 * @param player The player you're sending the packet to.
-	 * @param packet The packet you're sending to the player.
-	 */
-
-	public static void sendPacket(Player player, Object packet) {
-
-		try {
-
-			Object handle = player.getClass().getMethod("getHandle").invoke(player);
-			Object playerConnection = handle.getClass().getField("playerConnection").get(handle);
-			playerConnection.getClass().getMethod("sendPacket", UtilReflection.getNmsClass("Packet")).invoke(playerConnection, packet);
-		}
-
-		catch (Exception e) {
-			e.printStackTrace();
-		}
 	}
 }

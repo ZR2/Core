@@ -88,6 +88,19 @@ public class UtilMath {
     }
 
     /**
+     * Turns a speed into a vector.
+     *
+     * @param location The location from which the vector will be calculated.
+     * @param speed The speed in meters per second.
+     * @return The vector with the speed applied.
+     */
+    public static Vector getSpeedAsVector(Location location, double speed) {
+
+        Vector direction = location.getDirection();
+        return direction.multiply(speed / 20);
+    }
+
+    /**
      * Trims the specified double to the degrees specified.
      *
      * @param degree How many decimal places you are trimming to.

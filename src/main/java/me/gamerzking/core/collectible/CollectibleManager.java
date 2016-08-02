@@ -1,5 +1,6 @@
 package me.gamerzking.core.collectible;
 
+import com.google.common.collect.Maps;
 import me.gamerzking.core.collectible.types.Collectible;
 import me.gamerzking.core.collectible.types.CollectibleType;
 import me.gamerzking.core.collectible.types.morphs.MorphGolem;
@@ -16,7 +17,6 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -50,7 +50,7 @@ public class CollectibleManager implements Listener {
 
     private void addCollectibles() {
 
-        collectibles = new HashMap<>();
+        collectibles = Maps.newHashMap();
 
         addCollectible(new MorphGolem(this));
     }

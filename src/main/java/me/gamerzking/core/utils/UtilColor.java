@@ -69,8 +69,9 @@ public class UtilColor {
             case DARK_BLUE: return Color.BLUE;
             case DARK_GREEN: return Color.GREEN;
             case RED: return Color.RED;
+            case DARK_RED: return Color.RED;
 
-            default: return Color.WHITE;
+            default: return Color.BLACK;
         }
     }
 }

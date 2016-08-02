@@ -4,10 +4,7 @@ import me.gamerzking.core.Core;
 import org.bukkit.Location;
 import org.bukkit.entity.Creature;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.LivingEntity;
 import org.bukkit.metadata.FixedMetadataValue;
-
-import java.lang.reflect.Method;
 
 /**
  * Created by GamerzKing on 6/16/2016.
@@ -20,7 +17,7 @@ public class UtilEntity {
      * @param entity The entity you're silencing.
      */
 
-    public static void silence(LivingEntity entity) {
+    public static void silence(Entity entity) {
 
         entity.setMetadata("Silent", new FixedMetadataValue(Core.getInstance(), 1));
     }
@@ -28,7 +25,7 @@ public class UtilEntity {
     /**
      * Moves the entity towards the designated Location.
      *
-     * @param ent The entity that's being moved.
+     * @param ent    The entity that's being moved.
      * @param target The location the target is moving towards.
      * @param speed  The speed the entity will travel at.
      * @return Whether the entity made it to the location.
@@ -47,19 +44,6 @@ public class UtilEntity {
 
         //EntityCreature creature = ((CraftCreature) entity).getHandle();
         //creature.getControllerMove().a(target.getX(), target.getY(), target.getZ(), speed);
-
-        try {
-
-            Object entityHandle = UtilReflection.getHandle(ent);
-
-            Method getControllerMove = UtilReflection.getMethod(entityHandle.getClass(), "getControllerMove");
-            Method a = getControllerMove.getClass().getDeclaredMethod("a");
-
-            a.invoke(null, target.getX(), target.getY(), target.getZ(), speed);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
 
         return true;
     }

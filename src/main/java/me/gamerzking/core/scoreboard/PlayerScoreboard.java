@@ -5,19 +5,27 @@ import org.bukkit.ChatColor;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.scoreboard.Team;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by GamerzKing on 5/31/2016.
  */
 public class PlayerScoreboard {
 
+    private String title;
+
     private Scoreboard scoreboard;
     private Objective objective;
 
-    private List<String> lines = new ArrayList<>();
+    private List<String> entries;
+    private List<Team> teams;
+
+    private Map<String, Integer> scores;
 
     /**
      * @param title The title of the scoreboard
@@ -25,128 +33,63 @@ public class PlayerScoreboard {
 
     public PlayerScoreboard(String title) {
 
-        scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
+        this.title = title;
+        this.scoreboard = Bukkit.getScoreboardManager().getNewScoreboard();
 
-        objective = scoreboard.registerNewObjective(title, "dummy");
+        objective = scoreboard.registerNewObjective("sidebar", "dummy");
         objective.setDisplaySlot(DisplaySlot.SIDEBAR);
         objective.setDisplayName(ChatColor.BOLD + title);
+
+        this.entries = new ArrayList<>();
+        this.teams = new ArrayList<>();
+
+        this.scores = new HashMap<>();
     }
 
     /**
-     * Adds the specified text to the scoreboard.
+     * Adds the specified entry to the scoreboard.
      *
-     * @param text The text being added to the board.
+     * @param text The text you're adding to the board. Cannot be more than 48 characters.
      */
 
-    public void addLine(String text) {
+    public void addEntry(String text) {
 
-        text = abbreviate(text); /* Make sure it can't be more than 16 characters */
-        lines.add(text);
-    }
-
-    public void addBlankLine() {
-
-        addLine(" ");
+        addEntry(text, null);
     }
 
     /**
-     * Abbreviates the string specified.
+     * Adds the specified entry to the scoreboard.
      *
-     * @param line The line you're abbreviating.
-     * @return The string with a maximum length of 16 characters.
+     * @param text The text you're adding to the board. Cannot be more than 48 characters.
+     * @param score The index the score will appear at on the scoreboard.
      */
 
-    private String abbreviate(String line) {
+    public void addEntry(String text, Integer score) {
 
-        if (line.length() > 16)
-            line = line.substring(0, 16);
-
-        return line;
+        scores.put(text, score);
     }
 
-    /**
-     * Resets the current scoreboard by removing all of its elements.
-     */
-
-    public void resetScoreboard() {
-
-        lines.clear();
+    public String getTitle() {
+        return title;
     }
-
-    /**
-     * Builds the current scoreboard.
-     */
-
-    public void build() {
-
-        List<String> currentLines = new ArrayList<>();
-
-        for(String line : lines) {
-
-            while(true) {
-
-                boolean duplicate = false;
-
-                for(String text : currentLines) {
-
-                    if(line.equals(text) /* There is a duplicate. */) {
-
-                        line += ChatColor.RESET;
-                        duplicate = true;
-                    }
-                }
-
-                if(!duplicate)
-                    break;
-            }
-
-            currentLines.add(line);
-        }
-
-        for(int i = 0; i < 15; i++) {
-
-            if(i >= currentLines.size() /* There are more than 15 lines */) {
-
-                if(getLines().get(i) != null) {
-                    getScoreboard().resetScores(getLines().get(i));
-                }
-
-                continue;
-            }
-
-            if(getLines().get(i) == null || !getLines().get(i).equals(currentLines.get(i)) /* A line was updated or has been removed */) {
-                lines.add(currentLines.get(i));
-            }
-        }
-
-        for(int i = 0; i < lines.size(); i++) {
-
-            String line = lines.get(i);
-            getObjective().getScore(line).setScore(15 - i);
-        }
-    }
-
-    /**
-     * @return The scoreboard created, from the class constructor.
-     */
 
     public Scoreboard getScoreboard() {
         return scoreboard;
     }
 
-    /**
-     * @return The scoreboard objective, as defined in the class constructor.
-     */
-
     public Objective getObjective() {
         return objective;
     }
 
-    /**
-     * @return The {@link List<String>} of all scoreboard lines.
-     */
+    public List<String> getEntries() {
+        return entries;
+    }
 
-    public List<String> getLines() {
-        return lines;
+    public List<Team> getTeams() {
+        return teams;
+    }
+
+    public Map<String, Integer> getScores() {
+        return scores;
     }
 }

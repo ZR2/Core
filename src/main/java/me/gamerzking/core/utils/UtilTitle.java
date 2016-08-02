@@ -31,13 +31,13 @@ public class UtilTitle {
 
         try {
 
-            Object enumTitle = UtilReflection.getNmsClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
-            Object enumSubTitle = UtilReflection.getNmsClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("SUBTITLE").get(null);
+            Object enumTitle = UtilReflection.PackageType.MINECRAFT_SERVER.getClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("TITLE").get(null);
+            Object enumSubTitle = UtilReflection.PackageType.MINECRAFT_SERVER.getClass("PacketPlayOutTitle").getDeclaredClasses()[0].getField("SUBTITLE").get(null);
 
-            Object chatComponent = UtilReflection.getNmsClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', title) + "\"}");
-            Object subChatComponent = UtilReflection.getNmsClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', subtitle) + "\"}");
+            Object chatComponent = UtilReflection.PackageType.MINECRAFT_SERVER.getClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', title) + "\"}");
+            Object subChatComponent = UtilReflection.PackageType.MINECRAFT_SERVER.getClass("IChatBaseComponent").getDeclaredClasses()[0].getMethod("a", String.class).invoke(null, "{\"text\":\"" + ChatColor.translateAlternateColorCodes('&', subtitle) + "\"}");
 
-            Constructor<?> titleConstructor = UtilReflection.getNmsClass("PacketPlayOutTitle").getConstructor(UtilReflection.getNmsClass("PacketPlayOutTitle").getDeclaredClasses()[0], UtilReflection.getNmsClass("IChatBaseComponent"), int.class, int.class, int.class);
+            Constructor<?> titleConstructor = UtilReflection.PackageType.MINECRAFT_SERVER.getClass("PacketPlayOutTitle").getConstructor(UtilReflection.PackageType.MINECRAFT_SERVER.getClass("PacketPlayOutTitle").getDeclaredClasses()[0], UtilReflection.PackageType.MINECRAFT_SERVER.getClass("IChatBaseComponent"), int.class, int.class, int.class);
 
             Object packetTitle = titleConstructor.newInstance(enumTitle, chatComponent, fadeIn, stay, fadeOut);
             Object packetSubtitle = titleConstructor.newInstance(enumSubTitle, subChatComponent, fadeIn, stay, fadeOut);
